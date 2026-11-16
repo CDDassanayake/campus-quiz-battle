@@ -1,0 +1,13 @@
+id,category,text,optionA,optionB,optionC,optionD,correctIndex
+1,IP,How many bits are in an IPv4 address?,16,32,64,128,1
+2,IP,Which notation is used to write IPv6 addresses?,Decimal dotted,Binary,Hexadecimal separated by colons,Octal,2
+3,DNS,What does DNS translate?,IP addresses to MAC addresses,Domain names to IP addresses,URLs to files,Ports to protocols,1
+4,DNS,Which server gives the definitive IP address of a domain?,Recursive resolver,Root server,TLD server,Authoritative name server,3
+5,URL,In https://example.com:8080/a?x=1#top what is 8080?,Fragment,Query,Port,Path,2
+6,TCP,Which protocol gives reliable and ordered delivery?,UDP,TCP,ICMP,ARP,1
+7,UDP,Which protocol is connectionless?,TCP,TLS,UDP,SSH,2
+8,NIO,Which Java NIO class lets one thread watch many channels?,Selector,Thread,Scanner,URI,0
+9,TLS,What does a digital certificate link to an identity?,A private key,A public key,A password,An IP address,1
+10,Security,Which attack secretly relays and may alter client-server traffic?,Man-in-the-middle,Ping sweep,SQL injection,Brute force,0
+11,Security,Which technique helps detect data tampering?,Hashing,Caching,Compression,Load balancing,0
+12,Threads,Which Java type runs tasks on a pool of threads?,ExecutorService,StringBuilder,Scanner,URI,0

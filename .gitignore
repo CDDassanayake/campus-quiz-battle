@@ -1,0 +1,41 @@
+# Build output
+target/
+out/
+build/
+*.class
+*.jar
+*.war
+dependency-reduced-pom.xml
+
+# IDE
+.idea/
+*.iml
+.vscode/
+.classpath
+.project
+.settings/
+nbproject/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs / crash dumps
+*.log
+hs_err_pid*
+
+# Secrets: NEVER commit keystores, certificates, passwords or tokens
+secrets/*
+!secrets/.gitkeep
+*.p12
+*.pfx
+*.jks
+*.pem
+*.key
+*.crt
+.env
+*.local.properties
+
+# Report drafts (keep only the final PDF in docs/report/)
+docs/report/*.docx
+docs/report/*.tmp
