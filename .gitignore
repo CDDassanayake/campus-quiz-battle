@@ -1,22 +1,13 @@
 # Build output
 target/
-out/
-build/
-*.class
-*.jar
-*.war
-dependency-reduced-pom.xml
 
-# IDE
+# IDE / OS
 .idea/
 *.iml
 .vscode/
 .classpath
 .project
 .settings/
-nbproject/
-
-# OS
 .DS_Store
 Thumbs.db
 
@@ -24,18 +15,9 @@ Thumbs.db
 *.log
 hs_err_pid*
 
-# Secrets: NEVER commit keystores, certificates, passwords or tokens
-secrets/*
-!secrets/.gitkeep
+# Secrets: keystore, certificate, passwords (created locally by scripts/generate-keystore)
+secrets/
 *.p12
-*.pfx
 *.jks
 *.pem
-*.key
-*.crt
 .env
-*.local.properties
-
-# Report drafts (keep only the final PDF in docs/report/)
-docs/report/*.docx
-docs/report/*.tmp

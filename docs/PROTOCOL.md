@@ -63,7 +63,7 @@ The first message after connecting MUST be `HELLO|token` within 5 seconds, other
 | `GAME_OVER|winner|name:score;name:score` | Final standings (reliable, over TCP) |
 
 ### Error codes
-`BAD_TOKEN`, `BAD_MESSAGE`, `NOT_AUTHENTICATED`, `ROOM_NOT_FOUND`, `ROOM_FULL`, `NOT_IN_ROOM`, `NOT_HOST`, `GAME_RUNNING`, `ALREADY_ANSWERED`, `TOO_LATE`.
+`BAD_TOKEN`, `BAD_MESSAGE`, `NOT_AUTHENTICATED`, `ALREADY_CONNECTED`, `ROOM_NOT_FOUND`, `ROOM_FULL`, `NOT_IN_ROOM`, `NOT_HOST`, `GAME_RUNNING`, `ALREADY_ANSWERED`, `TOO_LATE`.
 
 ### Typical session
 ```

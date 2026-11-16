@@ -21,7 +21,7 @@ Read `architecture.md` first. This plan has **5 parts, one per member**, with cl
 2. **Branches:** `main` (final) ← `develop` (integration) ← `feature/mN-...` (yours). Open PRs into `develop`, never push to `main`.
 3. **Contracts are frozen** after Part 0. Never change `common/` alone. If a contract is wrong, raise it in the group chat and make one change PR that all five approve.
 4. **Never wait for a teammate.** Code against the interfaces in `common` and test with mocks in your own `src/test` (each part lists the mocks you need).
-5. **No secrets in Git.** Passwords, keystores, tokens and keys come from environment variables or the git-ignored `secrets/` folder.
+5. **No secrets in Git.** Passwords and the token key come from environment variables; keystore and certificate live in the git-ignored `secrets/` folder.
 6. **Everything you build must be demoable in 2 minutes.** Write your demo steps in your PR.
 7. Commit small and often. Merge to `develop` at least when your core tasks are done (Milestone A).
 
@@ -63,8 +63,8 @@ Goal: the `common` module exists and compiles, so Parts 1–5 can start in paral
 | P0-3 | M1 | `ClientSession` (in `common`) | Interface compiles |
 | P0-4 | M3 | `ServerInfo`; `LiveFeedPublisher`, `LiveFeedListener`, `LiveFeedReceiver`, `ServerAnnouncer`, `ServerFinder` | Interfaces compile |
 | P0-5 | M4 | `MessageHandler` (in `common`) | Interface compiles |
-| P0-6 | M5 | `TokenVerifier`, `SecureLoginClient`; `AppConfig` (loads `config/*.properties`, environment variables override) | Interfaces compile, `AppConfig` has unit test |
-| P0-7 | All | Review each other's PRs into `develop`, then tag `contracts-v1` and rebase your feature branch on `develop` | Tag exists; `mvn -q -DskipTests install` succeeds |
+| P0-6 | M5 | `TokenVerifier`, `SecureLoginClient`; `AppConfig` with `load(String file)` for `config/server.properties` / `config/client.properties` (run from the repo root); environment variables override | Interfaces compile, `AppConfig` has unit test |
+| P0-7 | All | Review each other's PRs into `develop`. Then one person runs `git tag contracts-v1 && git push origin contracts-v1` (a tag is just a bookmark meaning "interfaces agreed"). Everyone merges `develop` into their feature branch | Tag exists; `mvn -q -DskipTests install` succeeds |
 
 Contract signatures are in `architecture.md` section 6. Copy them exactly.
 
@@ -89,7 +89,7 @@ Contract signatures are in `architecture.md` section 6. Copy them exactly.
 | M1-T4 | Newline framing: partial reads, several messages in one read, drop the connection if a line exceeds 4096 bytes |
 | M1-T5 | Auth gate: the first message must be `HELLO|token` within 5 s. Verify with `TokenVerifier`; on success set the username and reply `WELCOME`, otherwise reply `ERROR|BAD_TOKEN` and close |
 | M1-T6 | Thread-safe `ClientSession.send()`: enqueue, then `selector.wakeup()` |
-| M1-T7 | Dispatch decoded messages to `MessageHandler` **on the handler executor**, never on the selector thread; call `onConnect` / `onDisconnect` |
+| M1-T7 | Dispatch to `MessageHandler` **on the handler executor**, never on the selector thread, with **per-session ordering**: `onConnect` (only after HELLO succeeded), then each `onMessage` in arrival order and never two at once for the same session, then `onDisconnect` (e.g. one task queue per session drained by one executor task at a time) |
 | M1-T8 | Answer `PING` with `PONG` inside the gateway (the game core never sees it) |
 | M1-T9 | `[stretch]` Close connections idle for more than 60 s; cap the write queue (e.g. 256 messages) and disconnect slow readers |
 | M1-T10 | `[stretch]` Graceful `stop()`: close channels, selector, no thread leaks |
@@ -108,6 +108,7 @@ Contract signatures are in `architecture.md` section 6. Copy them exactly.
 ### Definition of Done
 - 100 simultaneous clients are served by **one** selector thread (log or `jstack` evidence).
 - Messages split across several TCP segments and several messages in one segment are both handled.
+- With a handler pool of 8 threads, the messages of one client still reach the handler in order (tested).
 - A connection without a valid `HELLO` is closed within 5 s.
 - Tests pass: `mvn -q -pl m1-nio-gateway -am test`.
 
@@ -213,7 +214,7 @@ Why UDP for these two features, datagram format, broadcast vs multicast, sequenc
 
 ## Part 4 - M4: Game Core (`m4-game-core/`)
 
-**Concept to demonstrate:** multithreading and concurrency: `ExecutorService`, `ScheduledExecutorService`, concurrent collections, locking, thread-safe state. Also `java.net.URI` / `URL` for optional question import.
+**Concept to demonstrate:** the multithreaded server model from the lectures (a thread pool serving many clients at once): `ExecutorService`, `ScheduledExecutorService`, concurrent collections, locking, thread-safe state. Plus `java.net.URI` / `URL` for question import, so you also show a network API directly.
 
 **Goal:** all game rules and rooms, running correctly for several rooms and many players at the same time.
 
@@ -224,15 +225,15 @@ Why UDP for these two features, datagram format, broadcast vs multicast, sequenc
 
 | ID | Task |
 |---|---|
-| M4-T1 | Question model and CSV loader for `questions/sample-questions.csv` (columns in the file header) |
-| M4-T2 | `RoomManager implements MessageHandler`: `LIST_ROOMS`, `CREATE_ROOM`, `JOIN`, `LEAVE`, `START`, disconnect cleanup; send the replies defined in `PROTOCOL.md` |
+| M4-T1 | Question model and CSV loader for `questions/sample-questions.csv`, read as a classpath resource (columns in the file header) |
+| M4-T2 | `RoomManager implements MessageHandler`: `LIST_ROOMS`, `CREATE_ROOM`, `JOIN`, `LEAVE`, `START`, disconnect cleanup; send the replies defined in `PROTOCOL.md`; if a username connects twice, answer the second with `ERROR|ALREADY_CONNECTED` and close it |
 | M4-T3 | Room state machine `LOBBY → RUNNING → FINISHED`, host rights, `ERROR` codes (`ROOM_FULL`, `NOT_HOST`, `GAME_RUNNING`, ...) |
 | M4-T4 | Round engine on a `ScheduledExecutorService`: send `QUESTION`, wait `game.question.time.seconds`, close the round, send `RESULT` to every player |
 | M4-T5 | Scoring: first answer counts, correct = 100 points plus a speed bonus; handle `ALREADY_ANSWERED` and `TOO_LATE`; `GAME_OVER` with final standings |
 | M4-T6 | Push `publishCountdown` every second and `publishLeaderboard` after each answer batch to `LiveFeedPublisher` |
 | M4-T7 | Shared handler pool (size from `game.handler.pool.size`); expose `executor()` for the gateway; orderly shutdown |
 | M4-T8 | Document the locking strategy in a comment at the top of `Room` (what is guarded by what) |
-| M4-T9 | `[stretch]` `UrlQuestionSource`: download a CSV from `game.questions.url` using `URI`/`URL`, fall back to the local file on failure |
+| M4-T9 | `UrlQuestionSource`: if `game.questions.url` is set, download the CSV with `java.net.URI`/`URL` (timeouts set), fall back to the local file on any failure. This is your direct java.net contribution, so do it before the stretch tasks |
 | M4-T10 | `[stretch]` Player disconnect during a round does not stall or crash the game |
 | M4-T11 | Tests (see below) |
 
@@ -253,7 +254,7 @@ Why UDP for these two features, datagram format, broadcast vs multicast, sequenc
 - Tests pass: `mvn -q -pl m4-game-core -am test`.
 
 ### Your 2-minute demo
-1. Run the simulation with 2 rooms and show thread names in the log (40 s). 2. Run the 50-session concurrency test and show it passing (30 s). 3. Show the executor configuration and explain one race condition you prevented and how (50 s).
+1. Run the simulation with 2 rooms and show thread names in the log (30 s). 2. Run the 50-session concurrency test and show it passing (25 s). 3. Show questions loaded from a URL, then from the local fallback when the URL is wrong (25 s). 4. Explain one race condition you prevented and how (40 s).
 
 ### Your report section
 Concurrency design, thread-pool sizing, locking table, races found and fixed, optional URL import.
@@ -262,29 +263,29 @@ Concurrency design, thread-pool sizing, locking table, races found and fixed, op
 
 ## Part 5 - M5: Security (`m5-security/`)
 
-**Concept to demonstrate:** secure sockets: JSSE (`SSLContext`, `SSLServerSocket`, `SSLSocket`), keystore/truststore, TLS handshake, certificates, hashing and HMAC.
+**Concept to demonstrate:** secure sockets: JSSE (`SSLContext`, `SSLServerSocket`, `SSLSocket`), keystore, trusted certificates, TLS handshake, hashing and HMAC.
 
 **Goal:** players log in over TLS and receive a signed token that the gateway can verify.
 
-**You provide:** `TlsAuthServer`, `TlsSecureLoginClient` (`SecureLoginClient`), `HmacTokenService` (`TokenVerifier`), `AppConfig` (P0-6), the keystore scripts.
+**You provide:** `TlsAuthServer`, `TlsSecureLoginClient` (`SecureLoginClient`), `HmacTokenService` (`TokenVerifier`), `AppConfig` (P0-6), `scripts/generate-keystore.*`.
 **You consume:** nothing.
 
 ### Tasks (in priority order)
 
 | ID | Task |
 |---|---|
-| M5-T1 | Keystore setup: test `scripts/generate-keystore.*` and write the "how to trust the server certificate" steps in your module README |
-| M5-T2 | `SSLContext` factories: server side with `KeyManagerFactory` (keystore), client side with `TrustManagerFactory` (truststore); allow only TLS 1.3 and TLS 1.2 |
+| M5-T1 | Test `scripts/generate-keystore.*` on Windows and Linux/Mac and fix it if needed; write the 3-line "how to trust the server" steps in the root README |
+| M5-T2 | `SSLContext` factories: server side with `KeyManagerFactory` (keystore); client side with `TrustManagerFactory` built from `secrets/server-cert.pem` (load with `CertificateFactory`, put into an in-memory `KeyStore`); allow only TLS 1.3 and TLS 1.2 |
 | M5-T3 | `TlsAuthServer`: `SSLServerSocket` on `tls.auth.port`, worker pool, handle `REGISTER` and `LOGIN` per `PROTOCOL.md`; read timeout, max line length 4096 |
-| M5-T4 | User store: in-memory plus a file in `secrets/`, passwords stored only as **salted hashes** (PBKDF2 or SHA-256 with random salt) |
+| M5-T4 | In-memory user store; passwords stored only as **salted hashes** (PBKDF2 or SHA-256 with random salt). `[stretch]` also save the users to a file in `secrets/` |
 | M5-T5 | `HmacTokenService implements TokenVerifier`: issue and verify `username.expiry.hmac` using HMAC-SHA256, key from `QB_TOKEN_SECRET`, expiry check, constant-time compare (`MessageDigest.isEqual`) |
 | M5-T6 | `TlsSecureLoginClient implements SecureLoginClient` using `SSLSocket` with hostname verification enabled |
 | M5-T7 | `[stretch]` Login lockout after repeated failures; basic rate limit per IP |
-| M5-T8 | `[stretch]` Optional second truststore flag for a "bad" certificate to demonstrate a failed handshake |
+| M5-T8 | `[stretch]` A way to start the client with a different certificate file, to demonstrate a failed handshake |
 | M5-T9 | Tests (see below) and a short threat table for the report (eavesdropping, MITM, tampering, replay, spoofing, DoS) |
 
 ### Mocks you write in `src/test`
-- Test keystore generated at test time (never committed).
+- A test keystore and certificate generated at test time (never committed).
 - Tests: valid token, expired token, tampered token, wrong password, unknown certificate rejected, oversized line rejected.
 
 ### Boundaries: do NOT
@@ -299,10 +300,10 @@ Concurrency design, thread-pool sizing, locking table, races found and fixed, op
 - Tests pass: `mvn -q -pl m5-security -am test`.
 
 ### Your 2-minute demo
-1. Generate the keystore and start `TlsAuthServer` (20 s). 2. Log in, show the token (20 s). 3. Show a capture or log where the same login without TLS would be readable and with TLS is not (30 s). 4. Change one character of the token and show rejection; connect with the wrong truststore and show the handshake fail (40 s). 5. Name the threats this stops (10 s).
+1. Generate the keystore and start `TlsAuthServer` (20 s). 2. Log in, show the token (20 s). 3. Show a capture or log where the same login without TLS would be readable and with TLS is not (30 s). 4. Change one character of the token and show rejection; start the client with a different certificate file and show the handshake fail (40 s). 5. Name the threats this stops (10 s).
 
 ### Your report section
-TLS handshake diagram, keystore/truststore setup, token design, threat-to-defence table, the documented trade-off that game traffic is not TLS.
+TLS handshake diagram, keystore and certificate setup, token design, threat-to-defence table, the documented trade-off that game traffic is not TLS.
 
 ---
 
@@ -330,7 +331,7 @@ Integration issue rule: if something breaks, first reproduce it with the module'
 
 - [ ] `mvn -q clean install` passes on a clean clone of `develop`
 - [ ] `develop` merged into `main`
-- [ ] Final report PDF saved in `docs/report/` (all five sections written by their authors)
+- [ ] Final report PDF saved in `docs/` (all five sections written by their authors)
 - [ ] README tells an evaluator how to generate the keystore, set the two environment variables, build, and run server and client
 - [ ] No secrets in the repo (`secrets/` has only `.gitkeep`)
 - [ ] Create the ZIP from `main`: `git archive --format=zip -o QuizBattle_GroupXX.zip main` (this respects `.gitignore`)
@@ -340,7 +341,8 @@ Integration issue rule: if something breaks, first reproduce it with the module'
 ## Demo checklist (evaluation day)
 
 - [ ] Laptops charged, same Wi-Fi (or phone hotspot as backup), Java 17+ and Maven installed
-- [ ] `truststore.p12` copied to every client laptop; `QB_KEYSTORE_PASSWORD` and `QB_TOKEN_SECRET` set
+- [ ] Keystore regenerated with the server's **current** LAN IP (`QB_EXTRA_SAN`), `server-cert.pem` copied to every client's `secrets/` folder
+- [ ] `QB_KEYSTORE_PASSWORD` and `QB_TOKEN_SECRET` set on the server
 - [ ] Firewall allows Java on ports 5050, 5051, 5052, 5443
 - [ ] Server started before the evaluator arrives; one test game already played
 - [ ] Each member knows their 2-minute script and can explain their code if asked

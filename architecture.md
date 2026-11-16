@@ -90,7 +90,7 @@ sequenceDiagram
 | Thread(s) | Owner | Rule |
 |---|---|---|
 | 1 selector thread | M1 | Never calls game logic, never blocks, never does slow work |
-| Handler pool (N threads, `ExecutorService`) | M4 creates, M1 uses | All `MessageHandler` callbacks run here |
+| Handler pool (N threads, `ExecutorService`) | M4 creates, M1 uses | All `MessageHandler` callbacks run here. M1 guarantees **per-session order** (see contract below) |
 | Scheduler (`ScheduledExecutorService`) | M4 | Round timers and per-second feed ticks |
 | TLS acceptor + worker pool | M5 | One short task per login |
 | UDP announcer thread, UDP feed receiver thread (daemon) | M3 | Block on `receive()`, exit on `close()` |
@@ -122,10 +122,13 @@ public interface ClientSession {                    // implemented by M1
 }
 
 public interface MessageHandler {                   // implemented by M4, called by M1
-    void onConnect(ClientSession session);
-    void onMessage(ClientSession session, Message message);
+    void onConnect(ClientSession session);          // called AFTER HELLO succeeded: username() is always present
+    void onMessage(ClientSession session, Message message);   // never HELLO or PING (the gateway handles those)
     void onDisconnect(ClientSession session);
 }
+// Ordering guarantee given by M1: for ONE session, onConnect, then every onMessage in the order the
+// client sent them (never two at the same time), then onDisconnect. Different sessions run in parallel
+// on the handler pool, so M4 must make room/score state thread-safe.
 
 public interface TokenVerifier {                    // implemented by M5, called by M1
     Optional<String> verify(String token);          // username if valid and not expired
@@ -174,7 +177,7 @@ Public entry points (constructors the `app` module calls):
 | Threat (from the lectures) | Defence | Owner |
 |---|---|---|
 | Eavesdropping on passwords | Login only over TLS | M5 |
-| Spoofing / fake "University Free WiFi" server | Client trusts only the server certificate in its truststore, hostname verification on | M5 |
+| Spoofing / fake "University Free WiFi" server | Client trusts only the server certificate (`server-cert.pem`), hostname verification on | M5 |
 | Man-in-the-middle | TLS certificate validation; a MITM without the key fails the handshake | M5 |
 | Data tampering (token) | HMAC-SHA256 signature checked with constant-time compare | M5 |
 | Replay of a captured token | Short token lifetime (expiry inside the signed data) | M5 |
@@ -191,13 +194,11 @@ All ports and options live in `config/server.properties` and `config/client.prop
 
 ```
 campus-quiz-battle/
-├── README.md  architecture.md  plan.md  pom.xml
-├── .gitignore  .gitattributes  .editorconfig
-├── .github/            CODEOWNERS, pull_request_template.md
+├── README.md  architecture.md  plan.md  pom.xml  .gitignore  .gitattributes
 ├── config/             server.properties, client.properties
-├── scripts/            keystore + run scripts (.sh and .bat)
-├── secrets/            (git-ignored) keystore, truststore, user store
-├── docs/               PROTOCOL.md, report-outline.md, report/ (final PDF)
+├── scripts/            generate-keystore (.sh and .bat)
+├── secrets/            (git-ignored, created by the script) keystore, server-cert.pem
+├── docs/               PROTOCOL.md, report-outline.md (put the final report PDF here)
 ├── common/             shared contracts      (all, via approved PRs)
 ├── m1-nio-gateway/     Member 1
 ├── m2-tcp-client/      Member 2
@@ -213,7 +214,7 @@ campus-quiz-battle/
 |---|---|
 | Campus Wi-Fi blocks UDP broadcast or isolates clients | Multicast mode (`udp.feed.mode=multicast`), manual server IP entry in the client, phone hotspot for the demo |
 | Windows firewall blocks ports 5050/5051/5052/5443 | Allow Java through the firewall; add the ports to the setup checklist |
-| Self-signed certificate hostname mismatch on the LAN | Generate the keystore with `QB_EXTRA_SAN=ip:<server LAN IP>`; distribute `truststore.p12` to clients |
+| Self-signed certificate hostname mismatch on the LAN (the server's IP can change between days) | Generate the keystore with `QB_EXTRA_SAN=ip:<server LAN IP>` on the day of the demo and copy the new `server-cert.pem` to the clients |
 | One member falls behind | Every module is testable alone with mocks; core tasks are small and listed first in plan.md |
 | Merge conflicts | One folder per person; `common/` frozen after Phase 0 |
 
