@@ -10,7 +10,7 @@
 
 ## Rules for this folder
 - Only the owner edits this folder. Work on your feature branch and open a PR into `develop`.
-- Code against the interfaces in `common/contract`. Test with mocks inside this module's `src/test`.
+- Code against the interfaces in `common`. Test with mocks inside this module's `src/test`.
 
 ## You must NOT do (outside your boundary)
 - Game logic
@@ -18,7 +18,4 @@
 - Committing keystores, passwords or secrets
 
 ## Packages
-- `com.quizbattle.security.tls`: SSLContext factories, TlsAuthServer (SSLServerSocket) and TlsSecureLoginClient (SSLSocket).
-- `com.quizbattle.security.auth`: User store and salted password hashing.
-- `com.quizbattle.security.token`: HMAC-signed session tokens: issue and verify (TokenVerifier implementation).
-- `com.quizbattle.security.crypto`: Small hashing/HMAC helpers.
+- `com.quizbattle.security`: M5: security. TLS login server/client, user store, password hashing, HMAC tokens.

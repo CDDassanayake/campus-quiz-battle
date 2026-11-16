@@ -10,7 +10,7 @@
 
 ## Rules for this folder
 - Only the owner edits this folder. Work on your feature branch and open a PR into `develop`.
-- Code against the interfaces in `common/contract`. Test with mocks inside this module's `src/test`.
+- Code against the interfaces in `common`. Test with mocks inside this module's `src/test`.
 
 ## You must NOT do (outside your boundary)
 - TCP game messages
@@ -18,6 +18,4 @@
 - TLS code
 
 ## Packages
-- `com.quizbattle.udp.discovery`: ServerAnnouncer (server side) and ServerFinder (client side).
-- `com.quizbattle.udp.feed`: LiveFeedPublisher (server side) and LiveFeedReceiver (client side): countdown + leaderboard datagrams.
-- `com.quizbattle.udp.codec`: Datagram encode/decode, sequence numbers, size limit.
+- `com.quizbattle.udp`: M3: UDP. Server discovery (announcer/finder) and live feed (publisher/receiver), datagram codec.

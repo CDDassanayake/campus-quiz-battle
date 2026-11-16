@@ -2,7 +2,7 @@
 
 A Kahoot-style multiplayer quiz game for a campus LAN. Players find a server, log in securely, join a room and answer timed questions while everyone sees a live countdown and leaderboard.
 
-The design goal is **five independent modules, one network-programming concept each**, that only talk to each other through small interfaces in `common/contract`. That is what lets five people work in five folders without touching each other's code.
+The design goal is **five independent modules, one network-programming concept each**, that only talk to each other through small interfaces in `common`. That is what lets five people work in five folders without touching each other's code.
 
 ## 1. System overview
 
@@ -103,7 +103,7 @@ Shared mutable state lives only in M4 (rooms, scores) and in M1's per-session wr
 These signatures are the only coupling between modules. They live in `common` and are agreed on Day 1 (see plan.md, Part 0). Changing one needs all five members to approve.
 
 ```java
-// package com.quizbattle.common.protocol
+// package com.quizbattle.common   (the whole common module is ONE package)
 public enum MessageType { /* every type in docs/PROTOCOL.md */ }
 public record Message(MessageType type, List<String> fields) {}
 public final class MessageCodec {
@@ -111,10 +111,8 @@ public final class MessageCodec {
     public static Message decode(String line) throws ProtocolException;
 }
 
-// package com.quizbattle.common.model
 public record ServerInfo(String name, String host, int gatewayPort, int tlsPort) {}
 
-// package com.quizbattle.common.contract
 public interface ClientSession {                    // implemented by M1
     String id();
     Optional<String> username();                    // empty until HELLO accepted

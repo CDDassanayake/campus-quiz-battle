@@ -10,7 +10,7 @@
 
 ## Rules for this folder
 - Only the owner edits this folder. Work on your feature branch and open a PR into `develop`.
-- Code against the interfaces in `common/contract`. Test with mocks inside this module's `src/test`.
+- Code against the interfaces in `common`. Test with mocks inside this module's `src/test`.
 
 ## You must NOT do (outside your boundary)
 - Feature logic (it belongs in the owning module)

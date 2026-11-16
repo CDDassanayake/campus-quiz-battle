@@ -20,7 +20,7 @@ Read `architecture.md` first. This plan has **5 parts, one per member**, with cl
 1. **Stay in your folder.** You only edit your own `mN-*` folder. A PR that touches another member's folder gets rejected.
 2. **Branches:** `main` (final) ← `develop` (integration) ← `feature/mN-...` (yours). Open PRs into `develop`, never push to `main`.
 3. **Contracts are frozen** after Part 0. Never change `common/` alone. If a contract is wrong, raise it in the group chat and make one change PR that all five approve.
-4. **Never wait for a teammate.** Code against the interfaces in `common/contract` and test with mocks in your own `src/test` (each part lists the mocks you need).
+4. **Never wait for a teammate.** Code against the interfaces in `common` and test with mocks in your own `src/test` (each part lists the mocks you need).
 5. **No secrets in Git.** Passwords, keystores, tokens and keys come from environment variables or the git-ignored `secrets/` folder.
 6. **Everything you build must be demoable in 2 minutes.** Write your demo steps in your PR.
 7. Commit small and often. Merge to `develop` at least when your core tasks are done (Milestone A).
@@ -59,11 +59,11 @@ Goal: the `common` module exists and compiles, so Parts 1–5 can start in paral
 | ID | Owner | Task | Done when |
 |---|---|---|---|
 | P0-1 | All | 30-minute meeting: read `architecture.md` sections 6 and 7 and `docs/PROTOCOL.md`; agree on any changes; fill in the Team table | Table filled, changes (if any) written in the docs |
-| P0-2 | M2 | `common.protocol`: `MessageType`, `Message`, `MessageCodec` (encode/decode with escaping, max 4096 bytes) + unit tests | Round-trip tests pass for every message type in PROTOCOL.md |
-| P0-3 | M1 | `common.contract.ClientSession` | Interface compiles |
-| P0-4 | M3 | `common.model.ServerInfo`; `common.contract.LiveFeedPublisher`, `LiveFeedListener`, `LiveFeedReceiver`, `ServerAnnouncer`, `ServerFinder` | Interfaces compile |
-| P0-5 | M4 | `common.contract.MessageHandler` | Interface compiles |
-| P0-6 | M5 | `common.contract.TokenVerifier`, `SecureLoginClient`; `common.config.AppConfig` (loads `config/*.properties`, environment variables override) | Interfaces compile, `AppConfig` has unit test |
+| P0-2 | M2 | Package `com.quizbattle.common`: `MessageType`, `Message`, `MessageCodec` (encode/decode with escaping, max 4096 bytes) + unit tests | Round-trip tests pass for every message type in PROTOCOL.md |
+| P0-3 | M1 | `ClientSession` (in `common`) | Interface compiles |
+| P0-4 | M3 | `ServerInfo`; `LiveFeedPublisher`, `LiveFeedListener`, `LiveFeedReceiver`, `ServerAnnouncer`, `ServerFinder` | Interfaces compile |
+| P0-5 | M4 | `MessageHandler` (in `common`) | Interface compiles |
+| P0-6 | M5 | `TokenVerifier`, `SecureLoginClient`; `AppConfig` (loads `config/*.properties`, environment variables override) | Interfaces compile, `AppConfig` has unit test |
 | P0-7 | All | Review each other's PRs into `develop`, then tag `contracts-v1` and rebase your feature branch on `develop` | Tag exists; `mvn -q -DskipTests install` succeeds |
 
 Contract signatures are in `architecture.md` section 6. Copy them exactly.
@@ -81,19 +81,19 @@ Contract signatures are in `architecture.md` section 6. Copy them exactly.
 
 ### Tasks (in priority order)
 
-| ID | Task | Package |
-|---|---|---|
-| M1-T1 | Open a non-blocking `ServerSocketChannel` on `gateway.port`, register `OP_ACCEPT` | `gateway.server` |
-| M1-T2 | Selector loop: accept new channels, read, write, cancel keys on error or close | `gateway.server` |
-| M1-T3 | Per-connection state: read `ByteBuffer`, outgoing message queue, switch `OP_WRITE` interest on only when there is data to write | `gateway.session` |
-| M1-T4 | Newline framing: partial reads, several messages in one read, drop the connection if a line exceeds 4096 bytes | `gateway.framing` |
-| M1-T5 | Auth gate: the first message must be `HELLO|token` within 5 s. Verify with `TokenVerifier`; on success set the username and reply `WELCOME`, otherwise reply `ERROR|BAD_TOKEN` and close | `gateway.dispatch` |
-| M1-T6 | Thread-safe `ClientSession.send()`: enqueue, then `selector.wakeup()` | `gateway.session` |
-| M1-T7 | Dispatch decoded messages to `MessageHandler` **on the handler executor**, never on the selector thread; call `onConnect` / `onDisconnect` | `gateway.dispatch` |
-| M1-T8 | Answer `PING` with `PONG` inside the gateway (the game core never sees it) | `gateway.dispatch` |
-| M1-T9 | `[stretch]` Close connections idle for more than 60 s; cap the write queue (e.g. 256 messages) and disconnect slow readers | `gateway.session` |
-| M1-T10 | `[stretch]` Graceful `stop()`: close channels, selector, no thread leaks | `gateway.server` |
-| M1-T11 | Tests (see below) | `src/test` |
+| ID | Task |
+|---|---|
+| M1-T1 | Open a non-blocking `ServerSocketChannel` on `gateway.port`, register `OP_ACCEPT` |
+| M1-T2 | Selector loop: accept new channels, read, write, cancel keys on error or close |
+| M1-T3 | Per-connection state: read `ByteBuffer`, outgoing message queue, switch `OP_WRITE` interest on only when there is data to write |
+| M1-T4 | Newline framing: partial reads, several messages in one read, drop the connection if a line exceeds 4096 bytes |
+| M1-T5 | Auth gate: the first message must be `HELLO|token` within 5 s. Verify with `TokenVerifier`; on success set the username and reply `WELCOME`, otherwise reply `ERROR|BAD_TOKEN` and close |
+| M1-T6 | Thread-safe `ClientSession.send()`: enqueue, then `selector.wakeup()` |
+| M1-T7 | Dispatch decoded messages to `MessageHandler` **on the handler executor**, never on the selector thread; call `onConnect` / `onDisconnect` |
+| M1-T8 | Answer `PING` with `PONG` inside the gateway (the game core never sees it) |
+| M1-T9 | `[stretch]` Close connections idle for more than 60 s; cap the write queue (e.g. 256 messages) and disconnect slow readers |
+| M1-T10 | `[stretch]` Graceful `stop()`: close channels, selector, no thread leaks |
+| M1-T11 | Tests (see below) |
 
 ### Mocks you write in `src/test`
 - `EchoMessageHandler`: a `MessageHandler` that echoes every message back.
@@ -130,19 +130,19 @@ Why NIO, selector loop design, framing and buffer handling, how backpressure is 
 
 ### Tasks (in priority order)
 
-| ID | Task | Package |
-|---|---|---|
-| M2-T1 | `TcpGameClient.connect()`: resolve the host with `InetAddress.getByName`, connect with a timeout (`socket.connect(addr, timeoutMs)`), print the resolved IP | `client.net` |
-| M2-T2 | Reader thread (`BufferedReader` on UTF-8 stream) that decodes lines with `MessageCodec` and notifies the state/UI; synchronized or queued sender | `client.net` |
-| M2-T3 | Send `HELLO|token` on connect and wait for `WELCOME` (with `SO_TIMEOUT`) | `client.net` |
-| M2-T4 | Command methods: `listRooms`, `createRoom`, `join`, `leave`, `start`, `answer`, `ping` | `client.net` |
-| M2-T5 | Thread-safe client game state: current room, roster, current question, my score | `client.state` |
-| M2-T6 | Console UI flow: choose server (from `ServerFinder` or type an IP/hostname), login/register (via `SecureLoginClient`), lobby (list/create/join/start), question screen with answer input, result screen, final standings | `client.ui` |
-| M2-T7 | Implement `LiveFeedListener` and show the live countdown and leaderboard (use `LiveFeedReceiver` from M3) | `client.ui` |
-| M2-T8 | Handle server disconnect, timeouts and `ERROR` messages with clear user messages | `client.net` |
-| M2-T9 | `[stretch]` Swing/JavaFX UI instead of console | `client.ui` |
-| M2-T10 | `[stretch]` Reconnect with the same token | `client.net` |
-| M2-T11 | Tests (see below); keep `docs/PROTOCOL.md` up to date | `src/test` |
+| ID | Task |
+|---|---|
+| M2-T1 | `TcpGameClient.connect()`: resolve the host with `InetAddress.getByName`, connect with a timeout (`socket.connect(addr, timeoutMs)`), print the resolved IP |
+| M2-T2 | Reader thread (`BufferedReader` on UTF-8 stream) that decodes lines with `MessageCodec` and notifies the state/UI; synchronized or queued sender |
+| M2-T3 | Send `HELLO|token` on connect and wait for `WELCOME` (with `SO_TIMEOUT`) |
+| M2-T4 | Command methods: `listRooms`, `createRoom`, `join`, `leave`, `start`, `answer`, `ping` |
+| M2-T5 | Thread-safe client game state: current room, roster, current question, my score |
+| M2-T6 | Console UI flow: choose server (from `ServerFinder` or type an IP/hostname), login/register (via `SecureLoginClient`), lobby (list/create/join/start), question screen with answer input, result screen, final standings |
+| M2-T7 | Implement `LiveFeedListener` and show the live countdown and leaderboard (use `LiveFeedReceiver` from M3) |
+| M2-T8 | Handle server disconnect, timeouts and `ERROR` messages with clear user messages |
+| M2-T9 | `[stretch]` Swing/JavaFX UI instead of console |
+| M2-T10 | `[stretch]` Reconnect with the same token |
+| M2-T11 | Tests (see below); keep `docs/PROTOCOL.md` up to date |
 
 ### Mocks you write in `src/test`
 - `FakeGameServer`: a plain `ServerSocket` thread that plays scripted lines (WELCOME, QUESTION, RESULT).
@@ -177,16 +177,16 @@ Protocol design and why text lines, client threading model, UI screenshots, time
 
 ### Tasks (in priority order)
 
-| ID | Task | Package |
-|---|---|---|
-| M3-T1 | Datagram codec per `PROTOCOL.md` section 4: encode/decode, max 512 bytes, ignore malformed packets | `udp.codec` |
-| M3-T2 | `UdpServerAnnouncer`: daemon thread on `udp.discovery.port`; reply to `QB_DISCOVER|1` with `QB_SERVER|1|name|gatewayPort|tlsPort` | `udp.discovery` |
-| M3-T3 | `UdpServerFinder.find(timeout)`: broadcast `QB_DISCOVER|1` (also to each network interface's broadcast address), collect replies until the timeout, remove duplicates, fill `ServerInfo.host` from the sender address | `udp.discovery` |
-| M3-T4 | `UdpLiveFeedPublisher`: send `QB_CD` and `QB_LB` datagrams to the feed port with an increasing `seq`; max 4 per second per room | `udp.feed` |
-| M3-T5 | `UdpLiveFeedReceiver`: bind with `SO_REUSEADDR`, parse, drop stale `seq` per room, call `LiveFeedListener`; clean shutdown on `close()` | `udp.feed` |
-| M3-T6 | `[stretch]` Multicast mode (`MulticastSocket`, `joinGroup`) selected by `udp.feed.mode` for networks that block broadcast | `udp.feed` |
-| M3-T7 | `[stretch]` Loss/reorder demo: a test helper that drops and reorders packets and shows the receiver still behaves | `src/test` |
-| M3-T8 | Tests (see below) | `src/test` |
+| ID | Task |
+|---|---|
+| M3-T1 | Datagram codec per `PROTOCOL.md` section 4: encode/decode, max 512 bytes, ignore malformed packets |
+| M3-T2 | `UdpServerAnnouncer`: daemon thread on `udp.discovery.port`; reply to `QB_DISCOVER|1` with `QB_SERVER|1|name|gatewayPort|tlsPort` |
+| M3-T3 | `UdpServerFinder.find(timeout)`: broadcast `QB_DISCOVER|1` (also to each network interface's broadcast address), collect replies until the timeout, remove duplicates, fill `ServerInfo.host` from the sender address |
+| M3-T4 | `UdpLiveFeedPublisher`: send `QB_CD` and `QB_LB` datagrams to the feed port with an increasing `seq`; max 4 per second per room |
+| M3-T5 | `UdpLiveFeedReceiver`: bind with `SO_REUSEADDR`, parse, drop stale `seq` per room, call `LiveFeedListener`; clean shutdown on `close()` |
+| M3-T6 | `[stretch]` Multicast mode (`MulticastSocket`, `joinGroup`) selected by `udp.feed.mode` for networks that block broadcast |
+| M3-T7 | `[stretch]` Loss/reorder demo: a test helper that drops and reorders packets and shows the receiver still behaves |
+| M3-T8 | Tests (see below) |
 
 ### Mocks you write in `src/test`
 - A recording `LiveFeedListener`.
@@ -222,19 +222,19 @@ Why UDP for these two features, datagram format, broadcast vs multicast, sequenc
 
 ### Tasks (in priority order)
 
-| ID | Task | Package |
-|---|---|---|
-| M4-T1 | Question model and CSV loader for `questions/sample-questions.csv` (columns in the file header) | `game.question` |
-| M4-T2 | `RoomManager implements MessageHandler`: `LIST_ROOMS`, `CREATE_ROOM`, `JOIN`, `LEAVE`, `START`, disconnect cleanup; send the replies defined in `PROTOCOL.md` | `game.room` |
-| M4-T3 | Room state machine `LOBBY → RUNNING → FINISHED`, host rights, `ERROR` codes (`ROOM_FULL`, `NOT_HOST`, `GAME_RUNNING`, ...) | `game.room` |
-| M4-T4 | Round engine on a `ScheduledExecutorService`: send `QUESTION`, wait `game.question.time.seconds`, close the round, send `RESULT` to every player | `game.engine` |
-| M4-T5 | Scoring: first answer counts, correct = 100 points plus a speed bonus; handle `ALREADY_ANSWERED` and `TOO_LATE`; `GAME_OVER` with final standings | `game.engine` |
-| M4-T6 | Push `publishCountdown` every second and `publishLeaderboard` after each answer batch to `LiveFeedPublisher` | `game.engine` |
-| M4-T7 | Shared handler pool (size from `game.handler.pool.size`) in `game.concurrent`; expose `executor()` for the gateway; orderly shutdown | `game.concurrent` |
-| M4-T8 | Document the locking strategy in a comment at the top of `Room` (what is guarded by what) | `game.room` |
-| M4-T9 | `[stretch]` `UrlQuestionSource`: download a CSV from `game.questions.url` using `URI`/`URL`, fall back to the local file on failure | `game.question` |
-| M4-T10 | `[stretch]` Player disconnect during a round does not stall or crash the game | `game.room` |
-| M4-T11 | Tests (see below) | `src/test` |
+| ID | Task |
+|---|---|
+| M4-T1 | Question model and CSV loader for `questions/sample-questions.csv` (columns in the file header) |
+| M4-T2 | `RoomManager implements MessageHandler`: `LIST_ROOMS`, `CREATE_ROOM`, `JOIN`, `LEAVE`, `START`, disconnect cleanup; send the replies defined in `PROTOCOL.md` |
+| M4-T3 | Room state machine `LOBBY → RUNNING → FINISHED`, host rights, `ERROR` codes (`ROOM_FULL`, `NOT_HOST`, `GAME_RUNNING`, ...) |
+| M4-T4 | Round engine on a `ScheduledExecutorService`: send `QUESTION`, wait `game.question.time.seconds`, close the round, send `RESULT` to every player |
+| M4-T5 | Scoring: first answer counts, correct = 100 points plus a speed bonus; handle `ALREADY_ANSWERED` and `TOO_LATE`; `GAME_OVER` with final standings |
+| M4-T6 | Push `publishCountdown` every second and `publishLeaderboard` after each answer batch to `LiveFeedPublisher` |
+| M4-T7 | Shared handler pool (size from `game.handler.pool.size`); expose `executor()` for the gateway; orderly shutdown |
+| M4-T8 | Document the locking strategy in a comment at the top of `Room` (what is guarded by what) |
+| M4-T9 | `[stretch]` `UrlQuestionSource`: download a CSV from `game.questions.url` using `URI`/`URL`, fall back to the local file on failure |
+| M4-T10 | `[stretch]` Player disconnect during a round does not stall or crash the game |
+| M4-T11 | Tests (see below) |
 
 ### Mocks you write in `src/test`
 - `RecordingClientSession`: stores every message sent to it.
@@ -271,17 +271,17 @@ Concurrency design, thread-pool sizing, locking table, races found and fixed, op
 
 ### Tasks (in priority order)
 
-| ID | Task | Package |
-|---|---|---|
-| M5-T1 | Keystore setup: test `scripts/generate-keystore.*` and write the "how to trust the server certificate" steps in your module README | `scripts/`, module README |
-| M5-T2 | `SSLContext` factories: server side with `KeyManagerFactory` (keystore), client side with `TrustManagerFactory` (truststore); allow only TLS 1.3 and TLS 1.2 | `security.tls` |
-| M5-T3 | `TlsAuthServer`: `SSLServerSocket` on `tls.auth.port`, worker pool, handle `REGISTER` and `LOGIN` per `PROTOCOL.md`; read timeout, max line length 4096 | `security.tls` |
-| M5-T4 | User store: in-memory plus a file in `secrets/`, passwords stored only as **salted hashes** (PBKDF2 or SHA-256 with random salt) | `security.auth` |
-| M5-T5 | `HmacTokenService implements TokenVerifier`: issue and verify `username.expiry.hmac` using HMAC-SHA256, key from `QB_TOKEN_SECRET`, expiry check, constant-time compare (`MessageDigest.isEqual`) | `security.token` |
-| M5-T6 | `TlsSecureLoginClient implements SecureLoginClient` using `SSLSocket` with hostname verification enabled | `security.tls` |
-| M5-T7 | `[stretch]` Login lockout after repeated failures; basic rate limit per IP | `security.auth` |
-| M5-T8 | `[stretch]` Optional second truststore flag for a "bad" certificate to demonstrate a failed handshake | `security.tls` |
-| M5-T9 | Tests (see below) and a short threat table for the report (eavesdropping, MITM, tampering, replay, spoofing, DoS) | `src/test` |
+| ID | Task |
+|---|---|
+| M5-T1 | Keystore setup: test `scripts/generate-keystore.*` and write the "how to trust the server certificate" steps in your module README |
+| M5-T2 | `SSLContext` factories: server side with `KeyManagerFactory` (keystore), client side with `TrustManagerFactory` (truststore); allow only TLS 1.3 and TLS 1.2 |
+| M5-T3 | `TlsAuthServer`: `SSLServerSocket` on `tls.auth.port`, worker pool, handle `REGISTER` and `LOGIN` per `PROTOCOL.md`; read timeout, max line length 4096 |
+| M5-T4 | User store: in-memory plus a file in `secrets/`, passwords stored only as **salted hashes** (PBKDF2 or SHA-256 with random salt) |
+| M5-T5 | `HmacTokenService implements TokenVerifier`: issue and verify `username.expiry.hmac` using HMAC-SHA256, key from `QB_TOKEN_SECRET`, expiry check, constant-time compare (`MessageDigest.isEqual`) |
+| M5-T6 | `TlsSecureLoginClient implements SecureLoginClient` using `SSLSocket` with hostname verification enabled |
+| M5-T7 | `[stretch]` Login lockout after repeated failures; basic rate limit per IP |
+| M5-T8 | `[stretch]` Optional second truststore flag for a "bad" certificate to demonstrate a failed handshake |
+| M5-T9 | Tests (see below) and a short threat table for the report (eavesdropping, MITM, tampering, replay, spoofing, DoS) |
 
 ### Mocks you write in `src/test`
 - Test keystore generated at test time (never committed).
