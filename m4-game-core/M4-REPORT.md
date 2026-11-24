@@ -194,13 +194,13 @@ same lock plus the atomic round-closed flag.
 | `CsvQuestionParserTest` | 13 |
 | `QuestionBankTest` | 9 |
 | `UrlQuestionSourceTest` | 9 |
-| `RoomManagerLifecycleTest` | 11 |
-| `RoomManagerGameTest` | 9 |
+| `RoomManagerLifecycleTest` | 12 |
+| `RoomManagerGameTest` | 10 |
 | `RoomManagerErrorsTest` | 16 |
 | `DisconnectTest` | 6 |
 | `TwoRoomIsolationTest` | 2 |
 | `ConcurrencyTest` | 1 (100 iterations) |
-| **Total** | **76, 0 failures, 0 errors** |
+| **Total** | **78, 0 failures, 0 errors** |
 
 Highlights: exact 125/105/0 point assertions with a frozen `LongSupplier` clock;
 automatic closure at 1 s; early closure before a 5 s timer; leaderboard ordering with
@@ -237,6 +237,12 @@ runs passed), with every iteration asserting:
    response.
 6. **CSV edge cases** — BOM, CRLF, quoted commas/quotes/newlines and malformed rows are
    covered by unit tests.
+7. **Rejected duplicate connection evicted the real player** (found in the post-implementation
+   audit) — a rejected second session for the same username still produces `onDisconnect`;
+   that used to remove the original player from their room. `onDisconnect` now only releases
+   the username when `remove(username, session)` succeeds, and a regression test covers it.
+8. **Leaderboard throttling** had no test; a regression test now proves the 250 ms floor
+   suppresses intermediate publishes while the round close always publishes.
 
 ### 4.4 Unrelated failure in `common` (reported, not modified)
 
@@ -253,7 +259,7 @@ encodes a literal backslash + `n`. One-character fix for M2 (owner of `common`),
 change `"Test\\|\n"` to `"Test\\|\\n"`. `common` was left untouched.
 
 `-Dmaven.test.failure.ignore=true` runs the full reactor and shows
-**M4: 76/76 passing** alongside the unrelated common failure.
+**M4: 78/78 passing** alongside the unrelated common failure.
 
 ---
 
@@ -309,7 +315,7 @@ None of these change `common/`; they only clarify `docs/PROTOCOL.md`.
 # Full build (passes)
 mvn -q -DskipTests install
 
-# M4 tests (76 passing; common already installed)
+# M4 tests (78 passing; common already installed)
 mvn -q -pl m4-game-core test
 
 # 50-session stress test, custom iteration count
@@ -378,6 +384,6 @@ feat(m4): implement multithreaded game core (rooms, rounds, scoring)
 - per-room ReentrantLock (documented strategy), feed publishing outside locks,
   1 Hz countdown and throttled leaderboards
 - Java URI/URL question import with 3 s/5 s timeouts, 1 MiB cap and local fallback
-- 76 JUnit tests including a 50-session/2-room/100-iteration stress test
+- 78 JUnit tests including a 50-session/2-room/100-iteration stress test
 - GameSimulation demo and Maven exec configuration
 ```
