@@ -19,4 +19,17 @@
       <version>${project.version}</version>
     </dependency>
   </dependencies>
+
+  <build>
+    <plugins>
+      <!-- mvn -q -pl m4-game-core exec:java  (runs the standalone demo) -->
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>exec-maven-plugin</artifactId>
+        <configuration>
+          <mainClass>com.quizbattle.game.GameSimulation</mainClass>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
 </project>
