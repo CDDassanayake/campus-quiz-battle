@@ -142,9 +142,10 @@ only M2/common and does not automatically discover sibling-module jars. The
 integration owner must supply its app launcher; this phase did not edit app/POMs.
 The console uses the same injected service and needs no JavaFX runtime.
 
-JavaFX remains subject to team approval before integration/merge; local GUI work
-was authorized. The final integration request subsequently authorized Git operations;
-that does not establish team approval of the JavaFX technology choice.
+The user confirmed team approval of the existing optional JavaFX dependencies on
+2026-11-27 and explicitly authorized publication despite known external integration
+issues. New failures, unresolved conflicts or unapproved shared changes still stop
+publication.
 
 ## Configuration and certificates
 

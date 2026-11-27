@@ -30,8 +30,8 @@ pending; no JDK was installed and no system Java configuration was changed.
 JavaFX controls/FXML dependencies are optional for M2 consumers. The networking,
 state, service and console contain no JavaFX imports. Maven Dependency Plugin
 3.6.1 prepares platform JavaFX jars under target/javafx for the local launcher.
-**JavaFX still requires team approval before integration/merge.** Local development
-authorization does not establish that approval. No unrelated libraries were added.
+**Team approval for the existing JavaFX dependencies was confirmed by the user
+on 2026-11-27.** No shared/root dependency changes or unrelated libraries were added.
 
 ```text
 m2-tcp-client/
@@ -259,5 +259,5 @@ question IDs are reused. No unsupported messages or game rules were added.
 
 [SUBMISSION.md](SUBMISSION.md) records the M2 checkpoint and merge of fetched
 develop into the feature branch. [FINAL_INTEGRATION.md](FINAL_INTEGRATION.md)
-records current checks and why merging back to develop is blocked. Do not include
+records current checks, publication authorization and remaining integration issues. Do not include
 target output, temporary TLS material, logs, IDE files or the full screenshot matrix.

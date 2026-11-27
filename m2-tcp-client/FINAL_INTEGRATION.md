@@ -1,7 +1,8 @@
 # Final team integration verification
 
 M2 is preserved and available develop changes are merged locally. Full system
-integration is **blocked**. This report distinguishes production dependencies,
+integration is **blocked**, but publication is explicitly authorized despite the
+known external issues. Team JavaFX approval was confirmed by the user on 2026-11-27. This report distinguishes production dependencies,
 owner tests, local TLS verification and explicit mock demonstrations.
 
 ## Git preservation and upstream review
@@ -99,12 +100,15 @@ scripts/verify-real-security.ps1. Created: FINAL_INTEGRATION.md and
 PULL_REQUEST.md. Common, M1/M3/M4/M5, app, shared configuration, protocol and root
 POM were not edited locally. Existing tests and curated screenshots are preserved.
 
-Step 8 requires successful integration/verification before feature publication;
-that prerequisite is unmet. **Feature push is held. Develop merge/push is held.**
-The feature branch is retained. A local PR description is prepared for review;
-no remote PR was created and no protection was bypassed. The final Git hashes
-are available with `git log -3 --oneline`; this report cannot include its own
-containing commit hash. Generated logs, certificates, keys and build output stay
+The earlier publication hold is superseded by the user's 2026-11-27 request:
+publish the feature and merge into develop despite known external integration
+issues. The user also confirmed team approval of the existing optional JavaFX
+dependencies. A fresh fetch found no new develop changes, the working tree was
+clean and all 281 M2 tests passed again. The remote feature was verified at
+`c66c8dc` before this approval-record update. New failures, conflicts or unapproved
+shared changes still stop publication. Preserve the feature branch and use a PR
+if branch protection blocks a direct push. Consult remote refs and the completion
+report for final publication hashes; this document cannot include its own hash. Generated logs, certificates, keys and build output stay
 ignored. Final review uses scoped staged paths and `git diff --cached --check`.
 
 ## Launch and handoff
@@ -135,5 +139,5 @@ M1 must supply the authenticated gateway, M3 discovery/feed, and the app owner
 must supply ServerMain/ClientMain plus provider/lifecycle wiring. Shared codec
 and M5 test issues require owner resolution. Once develop contains those changes,
 fetch, inspect, merge and rerun the full reactor before repeating the real
-three-client acceptance procedure in INTEGRATION.md. Record team JavaFX approval,
-actual JDK 17 execution and any physical-device LAN testing separately.
+three-client acceptance procedure in INTEGRATION.md. Team JavaFX approval is
+confirmed; actual JDK 17 execution and physical-device LAN testing remain pending.

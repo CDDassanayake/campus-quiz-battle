@@ -33,8 +33,8 @@ unsupported READY message or speculative game-session restoration is introduced.
 
 The technology stack is Java 17 language/release compilation, Maven, JUnit 5 and
 JavaFX 17.0.18. JavaFX is optional for consumers of the module, keeping the console
-and networking layers independent of the toolkit. Team approval of the JavaFX
-dependency remains an integration requirement before merge.
+and networking layers independent of the toolkit. The user confirmed team approval
+of the existing JavaFX dependencies on 2026-11-27.
 
 ## 4. System design and architecture
 
@@ -331,8 +331,8 @@ M5 owner responsibilities remain credential escaping, token-format discrepancy
 resolution and lockout/rate limiting. M2 does not weaken certificate checks or
 rewrite passwords to work around those issues. Provider calls cannot always be
 forcibly cancelled through the common interfaces. Full NIO/UDP/LAN integration,
-actual Java 17 runtime execution, manual OS input and team JavaFX approval remain
-pending. No new protocol message or server-side game rule was added to mask gaps.
+actual Java 17 runtime execution and manual OS input remain pending. Team JavaFX
+approval was confirmed by the user on 2026-11-27. No new protocol message or server-side game rule was added to mask gaps.
 
 ## 15. Conclusion
 

@@ -12,7 +12,7 @@
   <artifactId>m2-tcp-client</artifactId>
   <name>M2 - TCP Client and Protocol</name>
 
-  <!-- Proposed presentation dependency; team approval is still required.
+  <!-- Optional presentation dependency; team approval confirmed by the user on 2026-11-27.
        Transport, model, service and console sources remain JavaFX-independent. -->
   <properties>
     <javafx.version>17.0.18</javafx.version>

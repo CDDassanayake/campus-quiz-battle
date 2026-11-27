@@ -1,8 +1,9 @@
 # Prepared PR: M2 TCP client, JavaFX gameplay and integration handoff
 
 Base: `develop`. Head: `feature/m2-tcp-client`.
-Status: local preparation only; feature publication and merge are held pending
-successful team integration and verification.
+Status: prepared fallback if branch protection requires a PR. On 2026-11-27 the
+user authorized publication despite known external integration issues and confirmed
+team approval for the existing optional JavaFX dependencies.
 
 M2 now provides persistent protocol TCP transport, immutable client state,
 asynchronous services, console interaction and JavaFX gameplay. It preserves
@@ -17,5 +18,6 @@ test run also finds two M5 failures and three errors. M1/M3/app remain skeletons
 real three-client gameplay and UDP/LAN acceptance cannot run. The passing TLS
 probe uses a test gateway and does not replace M5's failing suite.
 
-Do not merge until owner failures and missing production integration are resolved.
+Known external issues are accepted for publication, not claimed resolved. Stop for
+new failures, unresolved conflicts or unapproved shared configuration changes.
 See FINAL_INTEGRATION.md for exact evidence, commands and pending acceptance.

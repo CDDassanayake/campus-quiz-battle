@@ -6,7 +6,7 @@ The available M2 implementation, regression tests, documentation and explicit
 demonstration are ready for review. This is not a claim that the whole team's
 real multiplayer system is integrated. See REPORT.md for evidence and
 INTEGRATION.md for M1/M3/app dependencies, M5-owner issues, the shared codec failure,
-JavaFX approval and pending physical LAN/Java 17 runtime/manual OS input tests.
+confirmed JavaFX approval and pending physical LAN/Java 17 runtime/manual OS input tests.
 
 Branch: `feature/m2-tcp-client`. The final integration request explicitly
 superseded the earlier prohibition on Git publication. The reviewed M2 checkpoint
@@ -17,8 +17,9 @@ were preserved byte-for-byte across that merge. No reset, rebase, stash or force
 push was used. Locally authored changes remain confined to M2.
 
 See [FINAL_INTEGRATION.md](FINAL_INTEGRATION.md) for current verification,
-publication status and blockers. Develop must not receive this feature while
-significant failures and real integration prerequisites remain unresolved.
+publication authorization and remaining external integration issues. The latest
+request permits merging despite these known external issues; new failures or
+unresolved conflicts still stop publication.
 
 ## Submission contents
 
@@ -65,11 +66,12 @@ untracked-file listings. Stage explicit M2 paths only; inspect staged names and
 
 The user authorized checkpointing, fetching, merging develop into the feature,
 verification and feature publication. Publication includes the seven historical
-ahead commits reviewed before checkpointing. Step 8 makes feature publication
-conditional on successful integration and verification; those conditions
-currently fail. Both feature push and develop merge/push are held.
-Do not merge or push develop, force-push, bypass branch protection, or change
-another owner's source to conceal failures. The PR preparation in
+ahead commits reviewed before checkpointing. On 2026-11-27 the user explicitly
+authorized feature publication and merging into develop despite known external
+integration issues, and confirmed team JavaFX approval. This supersedes the
+earlier publication hold. Stop for new failures, unresolved conflicts or unapproved
+shared configuration changes. Never force-push, bypass branch protection or
+change another owner's source to conceal failures. The PR preparation in
 [PULL_REQUEST.md](PULL_REQUEST.md) records this explicitly.
 
 ## Final verification evidence
