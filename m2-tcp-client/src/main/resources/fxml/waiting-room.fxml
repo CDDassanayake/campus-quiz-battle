@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import com.quizbattle.client.ui.components.BrandMark?>
+<ScrollPane xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.quizbattle.client.ui.controller.WaitingRoomController" fitToWidth="true" hbarPolicy="NEVER" styleClass="page-scroll">
+<content><StackPane alignment="TOP_CENTER" styleClass="standard-page"><VBox spacing="24" maxWidth="1100">
+    <VBox spacing="8"><Label text="GOOD COMPANY. GREAT COMPETITION." styleClass="eyebrow"/><Label fx:id="roomTitle" styleClass="page-title" wrapText="true"/><Label fx:id="roomDetails" styleClass="body-secondary" wrapText="true"/></VBox>
+    <GridPane hgap="24" vgap="24">
+        <columnConstraints><ColumnConstraints percentWidth="62"/><ColumnConstraints percentWidth="38"/></columnConstraints>
+        <VBox spacing="16" minWidth="0"><Label text="Known players" styleClass="section-title"/><Label fx:id="rosterNotice" styleClass="supporting-text" wrapText="true"/><VBox fx:id="playerCards" spacing="12"/></VBox>
+        <VBox spacing="20" minWidth="0" styleClass="content-card,form-card" GridPane.columnIndex="1">
+            <BrandMark size="48"/><Label text="One room.&#10;A shared challenge." styleClass="section-title" wrapText="true"/>
+            <Label text="The battle begins when the host starts the round. Get ready to put your knowledge to the test." styleClass="body-secondary" wrapText="true"/>
+            <VBox fx:id="nonHostPanel" spacing="12"><ProgressIndicator fx:id="waitingIndicator" maxWidth="28" maxHeight="28"/><Label text="Waiting for the host to start…" styleClass="body-secondary" wrapText="true"/></VBox>
+            <Button fx:id="startBattle" text="Start Battle  →" onAction="#start" defaultButton="true" styleClass="primary-button,hero-button" maxWidth="1.7976931348623157E308"/>
+            <HBox fx:id="startProgress" spacing="10" visible="false"><ProgressIndicator maxWidth="24" maxHeight="24"/><Label text="Waiting for the first question…" styleClass="body-secondary" wrapText="true"/></HBox>
+            <Label fx:id="waitingError" styleClass="validation-message" wrapText="true"/>
+            <Separator/><Button fx:id="leaveRoom" text="Leave room" onAction="#leave" styleClass="outline-button" maxWidth="1.7976931348623157E308"/>
+            <Label text="Returning to the lobby sends a leave request. When the server starts the battle, choose an answer with the mouse or keys 1–4." styleClass="supporting-text" wrapText="true"/>
+        </VBox>
+    </GridPane>
+</VBox></StackPane></content></ScrollPane>

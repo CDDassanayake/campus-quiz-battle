@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<ScrollPane xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.quizbattle.client.ui.controller.SettingsController" fitToWidth="true" hbarPolicy="NEVER" styleClass="page-scroll">
+    <content><StackPane alignment="TOP_CENTER" styleClass="standard-page">
+        <VBox spacing="24" maxWidth="850">
+            <Button text="←  Back" onAction="#back" styleClass="text-button" maxWidth="100"/>
+            <VBox spacing="8"><Label text="MAKE IT YOURS" styleClass="eyebrow"/><Label text="Your setup" styleClass="page-title"/><Label text="A few small adjustments. A more comfortable battle." styleClass="body-secondary" wrapText="true"/></VBox>
+            <VBox spacing="24" styleClass="content-card,settings-card">
+                <Label text="Display &amp; motion" styleClass="section-title"/>
+                <VBox spacing="8"><CheckBox fx:id="fullscreen" text="Fullscreen mode" onAction="#toggleFullscreen"/><Label text="Use the whole screen. F11 toggles fullscreen; Esc returns to windowed mode." styleClass="body-secondary" wrapText="true"/></VBox>
+                <Separator/>
+                <VBox spacing="8"><CheckBox fx:id="reducedMotion" text="Reduce motion"/><Label text="Turn off page, hover and notification motion. Loading progress remains visible." styleClass="body-secondary" wrapText="true"/></VBox>
+            </VBox>
+            <VBox spacing="12" styleClass="content-card,settings-card">
+                <Label text="Campus edition" styleClass="card-title"/>
+                <Label text="CAMPUS QUIZ BATTLE · Version 1.0 · JavaFX multiplayer client" styleClass="body-secondary" wrapText="true"/>
+                <Label text="Discover a server, sign in, gather your players and complete a quiz. Questions, results and final standings follow the server. Real network services must be supplied by the integrated application; mock mode is labelled explicitly." styleClass="body-secondary" wrapText="true"/>
+            </VBox>
+        </VBox>
+    </StackPane></content>
+</ScrollPane>

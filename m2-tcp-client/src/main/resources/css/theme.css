@@ -1,0 +1,92 @@
+/* JavaFX looked-up colours: one offline palette for the application and dialogs. */
+.root, .dialog-pane {
+    -qb-bg: #0B1120;
+    -qb-secondary: #0F172A;
+    -qb-surface: #1E293B;
+    -qb-elevated: #263449;
+    -qb-purple: #7C3AED;
+    -qb-purple-hover: #8B5CF6;
+    -qb-lilac: #C4B5FD;
+    -qb-blue: #3B82F6;
+    -qb-cyan: #22D3EE;
+    -qb-success: #22C55E;
+    -qb-error: #EF4444;
+    -qb-warning: #F59E0B;
+    -qb-gold: #FBBF24;
+    -qb-text: #F8FAFC;
+    -qb-text-secondary: #94A3B8;
+    -qb-muted: #64748B;
+    -qb-border: #334155;
+    -qb-answer-a: #DC2626;
+    -qb-answer-b: #2563EB;
+    -qb-answer-c: #D97706;
+    -qb-answer-d: #059669;
+    -fx-font-family: "Segoe UI";
+    -fx-font-size: 14px;
+    -fx-background-color: -qb-bg;
+    -fx-base: -qb-surface;
+    -fx-accent: -qb-purple;
+    -fx-focus-color: -qb-lilac;
+    -fx-faint-focus-color: transparent;
+    -fx-control-inner-background: -qb-secondary;
+    -fx-text-fill: -qb-text;
+}
+.label { -fx-text-fill: -qb-text; }
+.app-shell { -fx-background-color: -qb-bg; }
+.app-header { -fx-padding: 18 32; -fx-background-color: -qb-bg; -fx-border-color: transparent transparent #1E293B transparent; }
+.brand-name { -fx-font-size: 17px; -fx-font-weight: bold; }
+.brand-caption { -fx-font-size: 10px; -fx-text-fill: -qb-text-secondary; }
+.header-page { -fx-font-size: 11px; -fx-text-fill: -qb-muted; -fx-padding: 0 0 0 16; -fx-border-color: transparent transparent transparent -qb-border; }
+.app-footer { -fx-padding: 16 32; -fx-background-color: -qb-bg; -fx-border-color: #1E293B transparent transparent transparent; }
+.footer-edition { -fx-font-size: 10px; -fx-text-fill: -qb-muted; }
+.footer-status { -fx-font-size: 11px; -fx-text-fill: -qb-text-secondary; }
+.mode-label { -fx-font-size: 10px; -fx-text-fill: -qb-lilac; }
+.player-chip { -fx-padding: 7 12; -fx-background-color: -qb-surface; -fx-background-radius: 8; -fx-font-weight: bold; -fx-font-size: 12px; }
+.page-scroll, .page-scroll > .viewport { -fx-background-color: -qb-bg; -fx-background-insets: 0; -fx-padding: 0; }
+.welcome-content { -fx-padding: 32 40 32 40; }
+.standard-page { -fx-padding: 32 48 40 48; }
+.hero-title { -fx-font-size: 44px; -fx-font-weight: bold; -fx-line-spacing: -3px; }
+.hero-accent { -fx-font-size: 28px; -fx-font-weight: bold; -fx-text-fill: -qb-lilac; }
+.hero-description { -fx-font-size: 15px; -fx-text-fill: -qb-text-secondary; -fx-line-spacing: 4px; }
+.eyebrow { -fx-font-size: 11px; -fx-font-weight: bold; -fx-text-fill: -qb-lilac; }
+.tagline { -fx-font-size: 12px; -fx-text-fill: -qb-muted; }
+.page-title { -fx-font-size: 32px; -fx-font-weight: bold; }
+.section-title { -fx-font-size: 21px; -fx-font-weight: bold; }
+.card-title { -fx-font-size: 16px; -fx-font-weight: bold; }
+.body-secondary { -fx-font-size: 14px; -fx-text-fill: -qb-text-secondary; -fx-line-spacing: 3px; }
+.supporting-text { -fx-font-size: 12px; -fx-text-fill: -qb-text-secondary; }
+.hero-visual { -fx-padding: 4; }
+.orbit-outer { -fx-fill: transparent; -fx-stroke: #1E293B; -fx-stroke-width: 1; }
+.orbit-inner { -fx-fill: #11182B; -fx-stroke: #26243F; -fx-stroke-width: 1; }
+.preview-card { -fx-background-color: -qb-secondary; -fx-background-radius: 20; -fx-border-color: #3B385B; -fx-border-radius: 20; -fx-padding: 24; -fx-effect: dropshadow(gaussian, #060913, 26, 0.25, 0, 12); }
+.preview-eyebrow { -fx-font-size: 9px; -fx-font-weight: bold; -fx-text-fill: -qb-text-secondary; }
+.preview-title { -fx-font-size: 25px; -fx-font-weight: bold; }
+.answer-tile { -fx-background-radius: 10; -fx-pref-height: 48; }
+.answer-a { -fx-background-color: -qb-answer-a; }
+.answer-b { -fx-background-color: -qb-answer-b; }
+.answer-c { -fx-background-color: -qb-answer-c; }
+.answer-d { -fx-background-color: -qb-answer-d; }
+.answer-letter { -fx-font-size: 19px; -fx-font-weight: bold; -fx-text-fill: white; }
+.rivalry-note { -fx-background-color: -qb-surface; -fx-background-radius: 12; -fx-border-color: -qb-border; -fx-border-radius: 12; -fx-padding: 12 16; -fx-effect: dropshadow(gaussian, #060913, 12, 0.1, 0, 4); }
+.note-title { -fx-font-size: 12px; -fx-font-weight: bold; }
+.line-icon { -fx-fill: transparent; -fx-stroke: -qb-text-secondary; -fx-stroke-width: 1.7; -fx-stroke-line-cap: round; -fx-stroke-line-join: round; }
+.gold-icon { -fx-fill: transparent; -fx-stroke: -qb-gold; -fx-stroke-width: 1.7; -fx-stroke-line-cap: round; -fx-stroke-line-join: round; }
+.accent-dot { -fx-fill: -qb-purple-hover; }
+.cyan-dot { -fx-fill: -qb-cyan; }
+.feature-icon { -fx-min-width: 36; -fx-pref-width: 36; -fx-max-width: 36; -fx-min-height: 36; -fx-pref-height: 36; -fx-max-height: 36; -fx-background-radius: 10; }
+.icon-purple { -fx-background-color: #302448; }
+.icon-purple .line-icon { -fx-stroke: -qb-lilac; }
+.icon-blue { -fx-background-color: #1C3150; }
+.icon-blue .line-icon { -fx-stroke: #80B1FF; }
+.icon-cyan { -fx-background-color: #163943; }
+.icon-cyan .line-icon { -fx-stroke: -qb-cyan; }
+.empty-state { -fx-padding: 48; -fx-min-height: 340; }
+.empty-icon { -fx-pref-width: 80; -fx-max-width: 80; -fx-pref-height: 80; -fx-background-color: #302448; -fx-background-radius: 20; }
+.empty-icon .line-icon { -fx-stroke: -qb-lilac; }
+.placeholder-badge { -fx-font-size: 12px; -fx-text-fill: -qb-lilac; }
+.settings-card { -fx-padding: 28; }
+.help-content { -fx-padding: 16 24; }
+.step-number { -fx-font-size: 17px; -fx-font-weight: bold; -fx-text-fill: -qb-lilac; -fx-min-width: 30; }
+.help-note { -fx-font-size: 12px; -fx-text-fill: -qb-lilac; -fx-padding: 12; -fx-background-color: #242037; -fx-background-radius: 8; }
+.quiz-dialog { -fx-background-color: -qb-bg; }
+.quiz-dialog > .button-bar { -fx-padding: 12 24 24 24; }

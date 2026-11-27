@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import com.quizbattle.client.ui.components.BrandMark?>
+<ScrollPane xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.quizbattle.client.ui.controller.CreateRoomController" fitToWidth="true" hbarPolicy="NEVER" styleClass="page-scroll">
+<content><StackPane alignment="TOP_CENTER" styleClass="standard-page"><VBox spacing="24" maxWidth="1000">
+    <VBox spacing="8"><Label text="GATHER YOUR RIVALS" styleClass="eyebrow"/><Label text="Create a battle." styleClass="page-title"/><Label text="A name, a few questions and a room full of bright minds." styleClass="body-secondary" wrapText="true"/></VBox>
+    <GridPane hgap="24" vgap="24">
+        <columnConstraints><ColumnConstraints percentWidth="58"/><ColumnConstraints percentWidth="42"/></columnConstraints>
+        <VBox spacing="20" minWidth="0" styleClass="content-card,form-card">
+            <VBox spacing="8"><Label text="Room name" styleClass="field-label"/><TextField fx:id="roomName" promptText="e.g. Campus Champions"/><Label text="1–24 letters, digits, spaces or underscores." styleClass="supporting-text" wrapText="true"/></VBox>
+            <VBox spacing="8"><Label text="Number of questions" styleClass="field-label"/><TextField fx:id="questionCount"/><Label text="Request a positive whole number. The server may reduce it to its available question bank; no maximum is advertised." styleClass="supporting-text" wrapText="true"/></VBox>
+            <Label fx:id="createError" styleClass="validation-message" wrapText="true"/>
+            <HBox fx:id="createProgress" spacing="10" visible="false" alignment="CENTER_LEFT"><ProgressIndicator maxWidth="24" maxHeight="24"/><Label text="Creating your room. Waiting for confirmation…" styleClass="body-secondary" wrapText="true"/></HBox>
+            <Button fx:id="createRoomButton" text="Create Battle  →" onAction="#create" defaultButton="true" styleClass="primary-button,hero-button" maxWidth="1.7976931348623157E308"/>
+            <Button fx:id="cancelCreate" text="Cancel" onAction="#cancel" styleClass="text-button" maxWidth="1.7976931348623157E308"/>
+        </VBox>
+        <VBox spacing="20" minWidth="0" styleClass="content-card,room-preview" GridPane.columnIndex="1">
+            <BrandMark size="48"/><Label text="YOUR BATTLE PREVIEW" styleClass="eyebrow"/><Label fx:id="roomPreview" styleClass="section-title" wrapText="true"/><Label text="The waiting room opens only after the server confirms your room. You can then start when your players are ready." styleClass="body-secondary" wrapText="true"/>
+        </VBox>
+    </GridPane>
+</VBox></StackPane></content></ScrollPane>

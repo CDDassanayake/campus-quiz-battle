@@ -1,0 +1,78 @@
+/* Shared component vocabulary, available to future account/lobby/game screens. */
+.button { -fx-cursor: hand; -fx-background-insets: 0; -fx-background-radius: 10; -fx-border-radius: 10; -fx-border-width: 2; -fx-border-color: transparent; -fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: -qb-text; -fx-padding: 10 18; }
+.primary-button { -fx-background-color: -qb-purple; -fx-text-fill: white; }
+.primary-button:hover { -fx-background-color: -qb-purple-hover; -fx-effect: dropshadow(gaussian, #42247A, 16, 0.12, 0, 3); }
+.primary-button:pressed { -fx-background-color: #6D28D9; }
+.secondary-button { -fx-background-color: -qb-surface; -fx-border-color: -qb-border; }
+.secondary-button:hover { -fx-background-color: -qb-elevated; -fx-border-color: -qb-muted; }
+.outline-button { -fx-background-color: transparent; -fx-border-color: -qb-border; }
+.outline-button:hover { -fx-background-color: -qb-surface; -fx-border-color: -qb-lilac; }
+.text-button, .brand-home { -fx-background-color: transparent; -fx-text-fill: -qb-text-secondary; }
+.text-button:hover { -fx-text-fill: -qb-text; -fx-background-color: -qb-surface; }
+.brand-home { -fx-padding: 0; -fx-border-width: 2; }
+.brand-home:hover { -fx-opacity: 0.9; }
+.icon-button { -fx-padding: 8; -fx-min-width: 38; -fx-min-height: 38; -fx-background-color: transparent; -fx-font-size: 20px; }
+.icon-button:hover { -fx-background-color: -qb-surface; }
+.destructive-button { -fx-background-color: #7F1D1D; -fx-text-fill: white; }
+.destructive-button:hover { -fx-background-color: #991B1B; }
+.button:focused { -fx-border-color: -qb-lilac; }
+.button:disabled { -fx-opacity: 0.68; -fx-cursor: default; -fx-effect: null; }
+.hero-button { -fx-padding: 14 22; -fx-font-size: 15px; -fx-min-height: 52; }
+.brand-mark { -fx-background-color: -qb-purple; -fx-background-radius: 12; }
+.brand-bolt { -fx-fill: white; }
+.content-card { -fx-background-color: -qb-secondary; -fx-border-color: #263247; -fx-border-width: 1; -fx-background-radius: 16; -fx-border-radius: 16; -fx-padding: 20; }
+.selectable-card, .server-card, .room-card { -fx-background-color: -qb-surface; -fx-cursor: hand; }
+.selectable-card:hover, .server-card:hover, .room-card:hover { -fx-border-color: -qb-purple-hover; -fx-background-color: -qb-elevated; }
+.selectable-card:focused, .server-card:focused, .room-card:focused { -fx-border-color: -qb-lilac; }
+.statistics-card { -fx-background-color: -qb-surface; }
+.text-field, .password-field, .combo-box-base { -fx-background-color: -qb-secondary; -fx-text-fill: -qb-text; -fx-prompt-text-fill: -qb-text-secondary; -fx-background-radius: 8; -fx-border-color: -qb-border; -fx-border-radius: 8; -fx-padding: 10 12; -fx-background-insets: 0; }
+.text-field:focused, .password-field:focused, .combo-box-base:focused { -fx-border-color: -qb-lilac; }
+.search-field { -fx-background-color: -qb-surface; }
+.combo-box .list-cell, .combo-box-popup .list-view { -fx-background-color: -qb-secondary; -fx-text-fill: -qb-text; }
+.validation-message { -fx-text-fill: #FCA5A5; -fx-font-size: 12px; }
+.status-indicator { -fx-padding: 8 12; -fx-background-color: -qb-secondary; -fx-background-radius: 20; -fx-border-color: #263247; -fx-border-radius: 20; }
+.status-text { -fx-font-size: 12px; -fx-text-fill: -qb-text-secondary; }
+.status-disconnected .status-dot { -fx-fill: -qb-muted; }
+.status-pending .status-dot { -fx-fill: -qb-warning; }
+.status-pending .status-text { -fx-text-fill: #FCD68A; }
+.status-connected .status-dot { -fx-fill: -qb-success; }
+.status-connected .status-text { -fx-text-fill: #86EFAC; }
+.status-lost .status-dot { -fx-fill: -qb-error; }
+.status-lost .status-text { -fx-text-fill: #FCA5A5; }
+.toast { -fx-padding: 12 16; -fx-background-color: -qb-elevated; -fx-background-radius: 12; -fx-border-radius: 12; -fx-border-width: 1 1 1 4; -fx-effect: dropshadow(gaussian, #050811, 18, 0.2, 0, 6); }
+.toast-info { -fx-border-color: -qb-blue; }
+.toast-success { -fx-border-color: -qb-success; }
+.toast-warning { -fx-border-color: -qb-warning; }
+.toast-error { -fx-border-color: -qb-error; }
+.toast .label { -fx-font-size: 14px; }
+.loading-overlay { -fx-background-color: rgba(11, 17, 32, 0.88); }
+.loading-card { -fx-background-color: -qb-surface; -fx-background-radius: 16; -fx-border-color: -qb-border; -fx-border-radius: 16; -fx-padding: 24; }
+.progress-indicator { -fx-progress-color: -qb-purple-hover; }
+.check-box { -fx-text-fill: -qb-text; -fx-font-size: 16px; -fx-font-weight: bold; -fx-padding: 4 0; }
+.check-box .box { -fx-background-color: -qb-secondary; -fx-border-color: -qb-border; -fx-border-radius: 5; -fx-background-radius: 5; -fx-padding: 5; }
+.check-box:selected .box { -fx-background-color: -qb-purple; -fx-border-color: -qb-purple; }
+.check-box:selected .mark { -fx-background-color: white; }
+.check-box:focused .box { -fx-border-color: -qb-lilac; }
+.separator .line { -fx-border-color: -qb-border; -fx-border-width: 1 0 0 0; }
+.scroll-bar { -fx-background-color: -qb-bg; -fx-pref-width: 10; }
+.scroll-bar .thumb { -fx-background-color: -qb-border; -fx-background-radius: 8; -fx-background-insets: 2; }
+.scroll-bar .thumb:hover { -fx-background-color: -qb-muted; }
+.scroll-bar .increment-button, .scroll-bar .decrement-button { -fx-padding: 0; -fx-background-color: transparent; }
+.scroll-bar .increment-arrow, .scroll-bar .decrement-arrow { -fx-padding: 0; }
+.tooltip { -fx-background-color: -qb-elevated; -fx-text-fill: -qb-text; -fx-background-radius: 8; -fx-padding: 8 12; }
+.form-card { -fx-padding: 28; }
+.field-label { -fx-font-size: 13px; -fx-font-weight: bold; -fx-text-fill: -qb-text; }
+.password-toggle { -fx-font-size: 12px; -fx-font-weight: normal; -fx-text-fill: -qb-text-secondary; }
+.password-toggle .box { -fx-padding: 3; }
+.status-message { -fx-padding: 16 20; -fx-background-color: -qb-secondary; -fx-background-radius: 12; -fx-text-fill: -qb-text-secondary; -fx-font-size: 14px; -fx-line-spacing: 3; }
+.server-card, .room-card { -fx-cursor: default; }
+.create-banner { -fx-background-color: #19182F; -fx-border-color: #443360; -fx-padding: 24; }
+.room-preview { -fx-background-color: #19182F; -fx-border-color: #443360; -fx-padding: 28; }
+.room-state { -fx-font-size: 11px; -fx-font-weight: bold; -fx-text-fill: -qb-lilac; }
+.room-state-lobby { -fx-text-fill: #86EFAC; }
+.room-state-running { -fx-text-fill: #FCD68A; }
+.room-state-finished { -fx-text-fill: -qb-text-secondary; }
+.player-avatar { -fx-min-width: 46; -fx-min-height: 46; -fx-alignment: center; -fx-background-color: #302448; -fx-background-radius: 12; -fx-text-fill: -qb-lilac; -fx-font-weight: bold; -fx-font-size: 16px; }
+.player-presence { -fx-font-size: 11px; -fx-text-fill: -qb-text-secondary; }
+.player-card { -fx-padding: 16; }
+.combo-box-popup .list-cell:hover, .combo-box-popup .list-cell:filled:selected { -fx-background-color: -qb-elevated; }

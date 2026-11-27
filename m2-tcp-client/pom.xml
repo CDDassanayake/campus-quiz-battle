@@ -12,11 +12,50 @@
   <artifactId>m2-tcp-client</artifactId>
   <name>M2 - TCP Client and Protocol</name>
 
+  <!-- Proposed presentation dependency; team approval is still required.
+       Transport, model, service and console sources remain JavaFX-independent. -->
+  <properties>
+    <javafx.version>17.0.18</javafx.version>
+  </properties>
+
   <dependencies>
+    <dependency>
+      <groupId>org.openjfx</groupId>
+      <artifactId>javafx-controls</artifactId>
+      <version>${javafx.version}</version>
+      <optional>true</optional>
+    </dependency>
+    <dependency>
+      <groupId>org.openjfx</groupId>
+      <artifactId>javafx-fxml</artifactId>
+      <version>${javafx.version}</version>
+      <optional>true</optional>
+    </dependency>
     <dependency>
       <groupId>com.quizbattle</groupId>
       <artifactId>common</artifactId>
       <version>${project.version}</version>
     </dependency>
   </dependencies>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-dependency-plugin</artifactId>
+        <version>3.6.1</version>
+        <executions>
+          <execution>
+            <id>prepare-javafx-launcher</id>
+            <phase>prepare-package</phase>
+            <goals><goal>copy-dependencies</goal></goals>
+            <configuration>
+              <includeGroupIds>org.openjfx</includeGroupIds>
+              <outputDirectory>${project.build.directory}/javafx</outputDirectory>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
 </project>

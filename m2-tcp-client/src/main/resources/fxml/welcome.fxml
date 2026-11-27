@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.geometry.Insets?>
+<?import com.quizbattle.client.ui.components.BrandMark?>
+<ScrollPane xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.quizbattle.client.ui.controller.WelcomeController" fitToWidth="true" hbarPolicy="NEVER" styleClass="page-scroll">
+    <content><StackPane alignment="TOP_CENTER">
+        <VBox spacing="28" maxWidth="1240" styleClass="welcome-content">
+            <GridPane hgap="32" alignment="CENTER_LEFT">
+                <columnConstraints><ColumnConstraints percentWidth="54"/><ColumnConstraints percentWidth="46"/></columnConstraints>
+                <VBox spacing="16" alignment="CENTER_LEFT" minWidth="0" GridPane.columnIndex="0">
+                    <HBox alignment="CENTER_LEFT" spacing="8"><Circle radius="3" styleClass="accent-dot"/><Label text="THE CAMPUS IS YOUR ARENA" styleClass="eyebrow"/></HBox>
+                    <VBox spacing="4"><Label text="Think fast.&#10;Play smart." wrapText="true" styleClass="hero-title"/><Label text="Become the champion." wrapText="true" styleClass="hero-accent"/></VBox>
+                    <Label text="Challenge your friends in real-time multiplayer quiz battles. A sharper mind. A shared campus. Your next great rivalry." wrapText="true" maxWidth="475" styleClass="hero-description"/>
+                    <HBox spacing="12" alignment="CENTER_LEFT">
+                        <Button fx:id="findBattle" text="Find a Battle   →" onAction="#find" styleClass="primary-button,hero-button" defaultButton="true"/>
+                        <Button fx:id="howToPlay" text="How to Play" onAction="#help" styleClass="secondary-button,hero-button"/>
+                    </HBox>
+                    <Label text="Connect. Compete. Conquer." styleClass="tagline"/>
+                </VBox>
+                <StackPane minHeight="352" minWidth="0" styleClass="hero-visual" GridPane.columnIndex="1" accessibleText="Decorative quiz preview with four answer colours and an original lightning bolt">
+                    <Circle radius="158" styleClass="orbit-outer"/>
+                    <Circle radius="126" styleClass="orbit-inner"/>
+                    <VBox spacing="20" maxWidth="326" maxHeight="275" rotate="-4" styleClass="preview-card">
+                        <HBox spacing="8" alignment="CENTER_LEFT"><Circle radius="3" styleClass="cyan-dot"/><Label text="QUIZ PREVIEW · ILLUSTRATION" styleClass="preview-eyebrow"/></HBox>
+                        <Label text="One question.&#10;Four possibilities." styleClass="preview-title"/>
+                        <GridPane hgap="10" vgap="10">
+                            <columnConstraints><ColumnConstraints percentWidth="50"/><ColumnConstraints percentWidth="50"/></columnConstraints>
+                            <StackPane styleClass="answer-tile,answer-a"><Label text="A" styleClass="answer-letter"/></StackPane>
+                            <StackPane styleClass="answer-tile,answer-b" GridPane.columnIndex="1"><Label text="B" styleClass="answer-letter"/></StackPane>
+                            <StackPane styleClass="answer-tile,answer-c" GridPane.rowIndex="1"><Label text="C" styleClass="answer-letter"/></StackPane>
+                            <StackPane styleClass="answer-tile,answer-d" GridPane.columnIndex="1" GridPane.rowIndex="1"><Label text="D" styleClass="answer-letter"/></StackPane>
+                        </GridPane>
+                    </VBox>
+                    <BrandMark size="68" rotate="8" StackPane.alignment="TOP_RIGHT"><StackPane.margin><Insets top="15" right="16"/></StackPane.margin></BrandMark>
+                    <HBox spacing="10" alignment="CENTER_LEFT" maxWidth="250" maxHeight="54" styleClass="rivalry-note" StackPane.alignment="BOTTOM_LEFT">
+                        <StackPane.margin><Insets bottom="2" left="12"/></StackPane.margin>
+                        <SVGPath styleClass="gold-icon" content="M 2 3 L 8 8 L 12 1 L 16 8 L 22 3 L 19 17 L 5 17 Z M 6 21 L 18 21"/>
+                        <VBox spacing="2"><Label text="A little knowledge." styleClass="note-title"/><Label text="A lot of friendly rivalry." styleClass="supporting-text"/></VBox>
+                    </HBox>
+                </StackPane>
+            </GridPane>
+            <VBox spacing="16">
+                <HBox alignment="CENTER_LEFT"><Label text="Better together. Built for a battle." styleClass="section-title"/><Region HBox.hgrow="ALWAYS"/></HBox>
+                <GridPane hgap="16">
+                    <columnConstraints><ColumnConstraints percentWidth="33.333"/><ColumnConstraints percentWidth="33.333"/><ColumnConstraints percentWidth="33.334"/></columnConstraints>
+                    <VBox spacing="10" minWidth="0" styleClass="content-card,feature-card">
+                        <HBox spacing="10" alignment="CENTER_LEFT"><StackPane styleClass="feature-icon,icon-purple"><SVGPath styleClass="line-icon" content="M 8 12 A 4 4 0 1 0 8 4 A 4 4 0 1 0 8 12 M 1 22 L 1 19 Q 1 15 8 15 Q 15 15 15 19 L 15 22 M 17 5 Q 23 6 20 12 M 18 16 Q 23 16 23 21"/></StackPane><Label text="Bring your circle" styleClass="card-title"/></HBox>
+                        <Label text="Create a room, invite your campus friends and play together on your local network." wrapText="true" styleClass="body-secondary"/>
+                    </VBox>
+                    <VBox spacing="10" minWidth="0" styleClass="content-card,feature-card" GridPane.columnIndex="1">
+                        <HBox spacing="10" alignment="CENTER_LEFT"><StackPane styleClass="feature-icon,icon-blue"><SVGPath styleClass="line-icon" content="M 12 5 A 8 8 0 1 0 12 21 A 8 8 0 1 0 12 5 M 9 1 L 15 1 M 12 1 L 12 5 M 12 9 L 12 14 L 16 14"/></StackPane><Label text="Think on your feet" styleClass="card-title"/></HBox>
+                        <Label text="Four choices. One answer. Stay sharp as each new question puts your knowledge to the test." wrapText="true" styleClass="body-secondary"/>
+                    </VBox>
+                    <VBox spacing="10" minWidth="0" styleClass="content-card,feature-card" GridPane.columnIndex="2">
+                        <HBox spacing="10" alignment="CENTER_LEFT"><StackPane styleClass="feature-icon,icon-cyan"><SVGPath styleClass="line-icon" content="M 6 2 L 18 2 L 18 11 Q 18 17 12 17 Q 6 17 6 11 Z M 6 5 L 1 5 L 1 8 Q 1 12 6 12 M 18 5 L 23 5 L 23 8 Q 23 12 18 12 M 12 17 L 12 22 M 7 22 L 17 22"/></StackPane><Label text="Earn your spot" styleClass="card-title"/></HBox>
+                        <Label text="Follow the competition and see where you finish with server-confirmed final rankings." wrapText="true" styleClass="body-secondary"/>
+                    </VBox>
+                </GridPane>
+            </VBox>
+        </VBox>
+    </StackPane></content>
+</ScrollPane>

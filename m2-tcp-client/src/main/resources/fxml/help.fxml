@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<ScrollPane xmlns:fx="http://javafx.com/fxml/1" fitToWidth="true" hbarPolicy="NEVER" prefViewportWidth="560" styleClass="page-scroll"><content>
+<VBox spacing="20" prefWidth="520" styleClass="help-content">
+    <VBox spacing="8"><Label text="A QUICK FIELD GUIDE" styleClass="eyebrow"/><Label text="Ready, set, outsmart." styleClass="page-title" wrapText="true"/><Label text="The full quiz flow, from your campus network to the final rankings." styleClass="body-secondary" wrapText="true"/></VBox>
+    <HBox spacing="16"><Label text="01" styleClass="step-number"/><VBox spacing="4" HBox.hgrow="ALWAYS"><Label text="Find your server" styleClass="card-title"/><Label text="Discover a server on the same network, or enter its hostname or IP address." styleClass="body-secondary" wrapText="true" maxWidth="440"/></VBox></HBox>
+    <HBox spacing="16"><Label text="02" styleClass="step-number"/><VBox spacing="4"><Label text="Make your entrance" styleClass="card-title"/><Label text="Register or log in through the team's secure TLS service." styleClass="body-secondary" wrapText="true" maxWidth="440"/></VBox></HBox>
+    <HBox spacing="16"><Label text="03" styleClass="step-number"/><VBox spacing="4"><Label text="Gather your rivals" styleClass="card-title"/><Label text="Create a quiz room as host, or join an available room." styleClass="body-secondary" wrapText="true" maxWidth="440"/></VBox></HBox>
+    <HBox spacing="16"><Label text="04" styleClass="step-number"/><VBox spacing="4"><Label text="Wait for the host" styleClass="card-title"/><Label text="The room host starts the game when the players are ready." styleClass="body-secondary" wrapText="true" maxWidth="440"/></VBox></HBox>
+    <HBox spacing="16"><Label text="05" styleClass="step-number"/><VBox spacing="4"><Label text="Think fast. Choose once." styleClass="card-title"/><Label text="Choose from four answers before the server's deadline. Only the server decides answer acceptance and points." styleClass="body-secondary" wrapText="true" maxWidth="440"/></VBox></HBox>
+    <HBox spacing="16"><Label text="06" styleClass="step-number"/><VBox spacing="4"><Label text="See how you finish" styleClass="card-title"/><Label text="Review each round's result, then the authoritative final scores and winner." styleClass="body-secondary" wrapText="true" maxWidth="440"/></VBox></HBox>
+    <Label text="Click an answer or use keys 1–4. Answers lock after sending; wait for the server's result. The timer and UDP rankings are informational. Use Leave room to return to the lobby, or Return to Lobby after the final standings." styleClass="help-note" wrapText="true"/>
+</VBox>
+</content></ScrollPane>
