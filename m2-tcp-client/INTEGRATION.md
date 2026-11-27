@@ -7,29 +7,30 @@ waits, final QA documentation and nine curated actual screenshots.
 
 ## Evidence and ownership
 
-Phase 7 review fetched `origin` without merging or changing the working tree.
-The latest `origin/develop` was **a5bd2e6e42c5c478ded99a7a8e62d14ed9d01e2b**.
-The working branch remains `feature/m2-tcp-client`, HEAD
-`952f2078299d3e3cf97ea508be9ff76b23a12743`. No common contract, shared
-configuration, root POM or other member's source was changed. The existing M2
-tracked/untracked implementation was preserved; nothing was stashed or committed.
+Final integration checkpointed M2 as `67e13f5`, then merged fetched
+`origin/develop` **a5bd2e6e42c5c478ded99a7a8e62d14ed9d01e2b** into
+`feature/m2-tcp-client` as `aa73f9e`, without conflicts. All 120 original M2
+source/assets matched their pre-merge SHA-256 hashes. The merge brings in the
+upstream M5 implementation; no common contract, shared configuration, root POM
+or other member's source was edited locally. See [FINAL_INTEGRATION.md](FINAL_INTEGRATION.md)
+for current test results and blockers. The earlier Phase 7/8 review was read-only;
+the subsequent final integration request explicitly authorized Git operations.
 
 | Module | Fetched develop contents | Readiness / verification |
 |---|---|---|
 | M1 | POM and package-info only | No NioGatewayServer implementation; real game transport integration blocked |
 | M2 | This local TCP/service/console/JavaFX implementation | Implemented and tested; real service injection supported |
 | M3 | POM and package-info only | No discovery/feed implementations; actual UDP testing blocked |
-| M4 | RoomManager, rooms/rounds, scoring, CSV/URL question sources and tests | Functional source; same on this branch and fetched develop; M2-to-real-engine-through-NIO testing pending M1 |
-| M5 | Five security classes plus tests | Present on fetched develop, absent in this working branch; isolated actual TLS probe passed |
+| M4 | RoomManager, rooms/rounds, scoring, CSV/URL question sources and tests | 78 tests pass; M2-to-real-engine-through-NIO testing pending M1 |
+| M5 | Five security classes plus tests, now merged | Actual merged TLS probe: 18 checks pass; owner JUnit suite: 24 pass, 2 failures, 3 errors |
 | app | POM already depends on all five modules; package-info only | No ClientMain/ServerMain; runtime wiring pending integration owner |
 | common | Frozen interfaces and codec | No differences between this branch and fetched develop; existing codec test failure remains |
 
-The real M5 probe exports **unmodified source from the requested Git revision to
-ignored M2 target output**, compiles it against current common, and uses fresh
-temporary test certificates. It does not merge M5 into this branch, add a Maven
-dependency, copy it into production sources, or install a provider. Changing
-branches/merging M5 still requires separate permission and preservation of the
-uncommitted M2 work. No branch update was necessary for this review.
+The real M5 probe supports both an isolated unmodified source export and
+`-UseWorkingTree -Revision HEAD`, which uses the actual built merged M5 classes.
+Both modes passed 18 checks with fresh temporary certificates. Neither adds a
+permanent Maven dependency, copies M5 into production sources or installs a
+provider. The probe's test TCP gateway does not establish real NIO integration.
 
 ## Public M2 entry points
 
@@ -142,7 +143,8 @@ integration owner must supply its app launcher; this phase did not edit app/POMs
 The console uses the same injected service and needs no JavaFX runtime.
 
 JavaFX remains subject to team approval before integration/merge; local GUI work
-was authorized. No approval to commit/merge was assumed.
+was authorized. The final integration request subsequently authorized Git operations;
+that does not establish team approval of the JavaFX technology choice.
 
 ## Configuration and certificates
 
@@ -211,6 +213,8 @@ Run from the repository root after fetching refs separately:
 & .\m2-tcp-client\scripts\verify-real-security.ps1
 # Or pin the inspected source explicitly:
 & .\m2-tcp-client\scripts\verify-real-security.ps1 -Revision a5bd2e6
+# Verify the actual merged module instead of an isolated export:
+& .\m2-tcp-client\scripts\verify-real-security.ps1 -UseWorkingTree -Revision HEAD
 ```
 
 This is opt-in and not part of headless Surefire. It requires installed JDK
@@ -256,8 +260,8 @@ physical clients are unavailable here. Do not label the mock journey LAN testing
 
 ### Server owner
 
-1. Integrate reviewed member branches under team approval. Preserve/checkpoint
-   M2's uncommitted work before any branch update. Resolve the shared codec test
+1. Integrate reviewed member branches under team approval. M2 is already
+   checkpointed and fetched develop is merged into its feature branch. Resolve the shared codec test
    through its owner; M2 must not patch that codec/test locally.
 2. Build available modules with `mvn clean test`. A known shared failure must
    remain visible in the report; `-DskipTests package` is only a launch preparation

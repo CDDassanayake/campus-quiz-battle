@@ -130,10 +130,14 @@ not authenticate through mocks. That limitation is part of the integration hando
 
 ```powershell
 & .\m2-tcp-client\scripts\verify-real-security.ps1 -Revision a5bd2e6
+# Or use the actual merged module (builds it unless -SkipBuild is supplied):
+& .\m2-tcp-client\scripts\verify-real-security.ps1 -UseWorkingTree -Revision HEAD
 ```
 
-The script compiles the actual fetched M5 source and proposed app-owned wiring
-example without changing branches or adding an M2-to-M5 Maven dependency. It uses
+By default the script compiles the actual fetched M5 source; -UseWorkingTree uses
+the actual built merged module after checking its source against the revision.
+Both modes compile the proposed app-owned wiring example without adding an
+M2-to-M5 Maven dependency. It uses
 fresh localhost certificates, environment-held temporary secrets and an ephemeral
 TLS port. Trust and hostname verification stay enabled.
 
@@ -146,6 +150,10 @@ Never display private keys, keystore passwords, HMAC secrets or actual tokens.
 Explain remaining M5-owner issues: credential escaping, token wire-format
 discrepancies, missing lockout/rate limiting and provider cancellation/cleanup.
 No insecure workaround was introduced by M2.
+
+The probe does not replace M5's own JUnit suite, which currently has two failures
+and three errors. Full reactor and real multiplayer integration remain blocked;
+see [FINAL_INTEGRATION.md](FINAL_INTEGRATION.md) for exact results.
 
 ## Independent console fallback
 

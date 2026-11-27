@@ -1,4 +1,4 @@
-# M2 submission readiness and proposed Git commands
+# M2 submission readiness and Git integration record
 
 ## Current readiness
 
@@ -8,13 +8,17 @@ real multiplayer system is integrated. See REPORT.md for evidence and
 INTEGRATION.md for M1/M3/app dependencies, M5-owner issues, the shared codec failure,
 JavaFX approval and pending physical LAN/Java 17 runtime/manual OS input tests.
 
-Branch: `feature/m2-tcp-client`. HEAD remains
-`952f2078299d3e3cf97ea508be9ff76b23a12743`. It is seven existing commits ahead of
-origin/feature/m2-tcp-client. M2 implementation is largely untracked, with the
-pre-existing M2 POM change. No commit, push, merge, rebase, reset or stash was
-performed during final QA. Source/config changes outside M2 were absent.
-At Phase 8 completion there were 118 untracked M2 files, including the preserved
-earlier implementation and curated report assets, and no staged files.
+Branch: `feature/m2-tcp-client`. The final integration request explicitly
+superseded the earlier prohibition on Git publication. The reviewed M2 checkpoint
+is `67e13f5c64e151456970bc2b657939ae0b7fb26e` (119 files). Fetched develop
+`a5bd2e6e42c5c478ded99a7a8e62d14ed9d01e2b` was merged without conflicts as
+`aa73f9ed64d0392ffe0d14b7001583cb28525404`. All 120 original M2 source/assets
+were preserved byte-for-byte across that merge. No reset, rebase, stash or force
+push was used. Locally authored changes remain confined to M2.
+
+See [FINAL_INTEGRATION.md](FINAL_INTEGRATION.md) for current verification,
+publication status and blockers. Develop must not receive this feature while
+significant failures and real integration prerequisites remain unresolved.
 
 ## Submission contents
 
@@ -52,40 +56,21 @@ git log --oneline origin/feature/m2-tcp-client..HEAD
 git check-ignore -- m2-tcp-client/target m2-tcp-client/target/real-m5
 ```
 
-The ordinary git diff does not show untracked implementation content: review
-those files too. The historical seven ahead commits must be understood before
-authorizing a push; pushing the branch would publish them along with the new M2
-commit. Do not force-push or integrate develop without separate authorization.
+The initial untracked implementation was reviewed and checkpointed before the
+merge. Current changes must still be reviewed through both tracked diffs and
+untracked-file listings. Stage explicit M2 paths only; inspect staged names and
+`git diff --cached --check`. Generated target/log/TLS material must remain ignored.
 
-## Proposed staging and publication: NOT EXECUTED
+## Authorized publication boundary
 
-Only run these commands after reviewing the files and explicitly approving the
-action. Do not replace the allowlist with git add . or git add -A.
-
-```powershell
-git add -- m2-tcp-client/.gitignore m2-tcp-client/pom.xml m2-tcp-client/README.md m2-tcp-client/INTEGRATION.md m2-tcp-client/REPORT.md m2-tcp-client/DEMO_GUIDE.md m2-tcp-client/SUBMISSION.md m2-tcp-client/src/main m2-tcp-client/src/test m2-tcp-client/scripts m2-tcp-client/examples m2-tcp-client/docs/screenshots
-git diff --cached --name-only
-git diff --cached --name-only -- . ':!m2-tcp-client'
-git diff --cached --check
-git diff --cached --stat
-git diff --cached
-```
-
-The outside-M2 staged-name command must produce no output. If unrelated work was
-already staged, stop and ask its owner how it should be handled; do not reset or
-unstage someone else's changes. Verify that no target/, secrets, temporary TLS
-material or IDE files are staged and that the nine curated images are intended.
-
-After a separate approval to commit, and then a separate approval to push:
-
-```powershell
-git commit -m "feat(m2): complete TCP client, JavaFX gameplay and final QA"
-git push -u origin feature/m2-tcp-client
-```
-
-These are recommendations, not authorization to execute them. No merge or PR
-publication is included. JavaFX team approval and integration ownership decisions
-must be recorded before the team treats this as an approved integration change.
+The user authorized checkpointing, fetching, merging develop into the feature,
+verification and feature publication. Publication includes the seven historical
+ahead commits reviewed before checkpointing. Step 8 makes feature publication
+conditional on successful integration and verification; those conditions
+currently fail. Both feature push and develop merge/push are held.
+Do not merge or push develop, force-push, bypass branch protection, or change
+another owner's source to conceal failures. The PR preparation in
+[PULL_REQUEST.md](PULL_REQUEST.md) records this explicitly.
 
 ## Final verification evidence
 

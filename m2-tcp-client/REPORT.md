@@ -280,6 +280,8 @@ The opt-in real-M5 probe is separate from both JUnit and mock authentication.
 | M2 ordinary tests | 281 passed; no failures/errors/skips |
 | Graphical smoke | 308 checks passed |
 | Actual M5 TLS probe | 18 checks passed |
+| M4 owner tests after develop merge | 78 passed |
+| M5 owner tests after develop merge | 29 run: 24 passed, 2 failures, 3 errors; owner review required |
 | Standard requested reactor | Existing common codec failure, 42 common tests / one failure |
 | Java | Release 17 bytecode; JavaFX 17.0.18; executed on Java 21 |
 | Actual Java 17 runtime | Not available in configured/standard locations; pending |
@@ -295,7 +297,9 @@ separately from the failing standard reactor.
 M1 must implement the authenticated NIO gateway and ordered MessageHandler
 callbacks. M3 must supply actual discovery/feed components. M4's RoomManager source
 is available but its real end-to-end path awaits M1. M5's real TLS code is available
-on develop and was tested in isolation; it has not been merged into this branch.
+on develop and is now merged into this feature branch. Both its actual built
+module and an isolated source export passed the 18-check TLS probe. Its own JUnit
+suite has five unsuccessful cases; see [FINAL_INTEGRATION.md](FINAL_INTEGRATION.md).
 App has dependencies but no ClientMain/ServerMain implementation.
 
 The handoff includes an app-owned wiring example compiled against actual M5

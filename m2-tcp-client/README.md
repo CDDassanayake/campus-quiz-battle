@@ -1,4 +1,4 @@
-# Campus Quiz Battle ? M2 TCP client
+# Campus Quiz Battle - M2 TCP client
 
 M2 provides the persistent TCP game client, immutable client state, asynchronous
 application service, console interface and interactive JavaFX application. The
@@ -18,7 +18,8 @@ restoration is added to M2.
 | [REPORT.md](REPORT.md) | Academic report material; five implementation-based Mermaid diagrams |
 | [DEMO_GUIDE.md](DEMO_GUIDE.md) | Complete mock/TLS/console demonstration and an eight-minute presentation flow |
 | [INTEGRATION.md](INTEGRATION.md) | Verified constructors, real provider wiring, ports/certificates, limitations and pending three-client LAN procedure |
-| [SUBMISSION.md](SUBMISSION.md) | Submission contents, exclusions and proposed scoped Git commands; none executed |
+| [SUBMISSION.md](SUBMISSION.md) | Submission contents, exclusions and authorized Git integration record |
+| [FINAL_INTEGRATION.md](FINAL_INTEGRATION.md) | Current integration results, owner blockers and publication status |
 
 ## Technology and module structure
 
@@ -256,7 +257,7 @@ Frozen limitations remain: no initial roster snapshot, no LEAVE acknowledgement,
 no ERROR correlation ID, no question ID on UDP countdown, and ambiguity if wire
 question IDs are reused. No unsupported messages or game rules were added.
 
-[SUBMISSION.md](SUBMISSION.md) gives the exact M2-only staging allowlist and proposed
-commit/push commands for review. Do not include target output, temporary TLS
-material, logs, IDE files or the full screenshot matrix. No Git publication or
-branch integration was performed. Final QA only changed M2 files.
+[SUBMISSION.md](SUBMISSION.md) records the M2 checkpoint and merge of fetched
+develop into the feature branch. [FINAL_INTEGRATION.md](FINAL_INTEGRATION.md)
+records current checks and why merging back to develop is blocked. Do not include
+target output, temporary TLS material, logs, IDE files or the full screenshot matrix.
