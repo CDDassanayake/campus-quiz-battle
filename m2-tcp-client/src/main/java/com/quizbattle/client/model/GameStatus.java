@@ -1,0 +1,6 @@
+package com.quizbattle.client.model;
+
+public enum GameStatus {
+    DISCONNECTED, CONNECTING, AUTHENTICATING, LOBBY, WAITING_ROOM,
+    QUESTION_ACTIVE, ANSWER_SUBMITTED, ROUND_RESULT, GAME_OVER
+}

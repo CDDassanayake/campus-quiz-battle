@@ -1,0 +1,54 @@
+.game-page { -fx-padding: 24 32 40; }
+.question-panel { -fx-padding: 24; -fx-border-color: #453574; -fx-border-radius: 18; }
+.question-text { -fx-font-size: 25px; -fx-font-weight: bold; -fx-text-fill: #F8FAFC; }
+.question-progress { -fx-pref-height: 6; -fx-accent: #8B5CF6; }
+.question-progress > .bar { -fx-background-color: #8B5CF6; -fx-background-insets: 0; -fx-padding: 3; }
+.question-progress > .track { -fx-background-color: #334155; -fx-background-insets: 0; }
+.answer-card { -fx-background-radius: 14; -fx-border-radius: 14; -fx-border-width: 2; -fx-padding: 18; -fx-cursor: hand; -fx-alignment: center-left; }
+.answer-card .label { -fx-text-fill: #F8FAFC; -fx-font-size: 16; }
+.answer-0 { -fx-background-color: #451D29; -fx-border-color: #DC2626; }
+.answer-1 { -fx-background-color: #182F56; -fx-border-color: #2563EB; }
+.answer-2 { -fx-background-color: #422D19; -fx-border-color: #D97706; }
+.answer-3 { -fx-background-color: #123B35; -fx-border-color: #059669; }
+.answer-letter { -fx-font-size: 22px !important; -fx-font-weight: bold; -fx-padding: 8; -fx-alignment: center; -fx-background-radius: 8; }
+.answer-0 .answer-letter { -fx-background-color: #DC2626; }
+.answer-1 .answer-letter { -fx-background-color: #2563EB; }
+.answer-2 .answer-letter { -fx-background-color: #925307; }
+.answer-3 .answer-letter { -fx-background-color: #047857; }
+.answer-card:hover, .answer-card:focused { -fx-border-color: #F8FAFC; -fx-effect: dropshadow(gaussian, #53439A, 12, .15, 0, 0); }
+.answer-card:disabled { -fx-opacity: .65; }
+.answer-card .label:disabled { -fx-opacity: 1; }
+.answer-card.answer-selected { -fx-opacity: 1; -fx-border-color: #E9D5FF; -fx-border-width: 3; -fx-effect: dropshadow(gaussian, #7C3AED, 16, .2, 0, 0); }
+.answer-card.answer-correct { -fx-opacity: 1; -fx-background-color: #123B2B; -fx-border-color: #86EFAC; }
+.answer-card.answer-incorrect { -fx-opacity: 1; -fx-background-color: #451D29; -fx-border-color: #FCA5A5; }
+.timer-track { -fx-fill: transparent; -fx-stroke: #334155; -fx-stroke-width: 6; }
+.timer-ring { -fx-fill: transparent; -fx-stroke: #A78BFA; -fx-stroke-width: 6; -fx-stroke-line-cap: round; }
+.timer-warning { -fx-stroke: #F59E0B; }
+.timer-danger { -fx-stroke: #EF4444; }
+.timer-number { -fx-font-size: 30; -fx-font-weight: bold; -fx-text-fill: #F8FAFC; }
+.submission-panel { -fx-background-color: #17213A; -fx-background-radius: 12; -fx-padding: 16; }
+.submission-status { -fx-font-size: 16; -fx-font-weight: bold; -fx-text-fill: #DDD6FE; }
+.ranking-panel { -fx-padding: 20; }
+.ranking-list { -fx-background-color: transparent; -fx-background-insets: 0; -fx-padding: 0; }
+.ranking-list .list-cell { -fx-background-color: transparent; -fx-padding: 3 0; }
+.ranking-list .list-cell:focused { -fx-border-color: #C4B5FD; -fx-border-radius: 10; }
+.ranking-list .list-cell:empty { -fx-border-width: 0; }
+.ranking-row { -fx-padding: 12 8; -fx-alignment: center-left; -fx-background-color: #131E32; -fx-background-radius: 10; }
+.ranking-self { -fx-background-color: #332456; -fx-border-color: #8B5CF6; -fx-border-radius: 10; }
+.ranking-score { -fx-text-fill: #F8FAFC; -fx-font-weight: bold; }
+.rank-number { -fx-text-fill: #94A3B8; -fx-font-weight: bold; }
+.rank-gold { -fx-text-fill: #FBBF24; -fx-font-weight: bold; }
+.result-panel { -fx-padding: 32; -fx-border-radius: 18; -fx-border-width: 2; }
+.result-correct { -fx-border-color: #22C55E; }
+.result-incorrect { -fx-border-color: #EF4444; }
+.result-unanswered { -fx-border-color: #F59E0B; }
+.correct-answer { -fx-text-fill: #86EFAC; -fx-font-size: 20; -fx-font-weight: bold; }
+.points-display { -fx-font-size: 38; -fx-text-fill: #DDD6FE; -fx-font-weight: bold; }
+.trophy-mark { -fx-font-size: 54; -fx-text-fill: #FBBF24; }
+.trophy-vector { -fx-fill: transparent; -fx-stroke: #FBBF24; -fx-stroke-width: 4; -fx-stroke-line-cap: round; -fx-stroke-line-join: round; }
+.podium-step { -fx-padding: 24 16; -fx-background-radius: 18 18 8 8; -fx-border-radius: 18 18 8 8; -fx-border-width: 1; }
+.podium-0 { -fx-background-color: #3A3020; -fx-border-color: #FBBF24; }
+.podium-1 { -fx-background-color: #283446; -fx-border-color: #CBD5E1; }
+.podium-2 { -fx-background-color: #3D2D27; -fx-border-color: #CD9165; }
+.podium-avatar { -fx-font-size: 28; -fx-font-weight: bold; -fx-text-fill: #F8FAFC; -fx-background-color: #514273; -fx-padding: 10 18; -fx-background-radius: 32; }
+.podium-score { -fx-font-size: 27; -fx-font-weight: bold; -fx-text-fill: #F8FAFC; }

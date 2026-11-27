@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import com.quizbattle.client.ui.components.BrandMark?>
+<?import com.quizbattle.client.ui.components.PasswordInput?>
+<ScrollPane xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.quizbattle.client.ui.controller.RegisterController" fitToWidth="true" hbarPolicy="NEVER" styleClass="page-scroll">
+<content><StackPane alignment="TOP_CENTER" styleClass="standard-page"><VBox spacing="24" maxWidth="1040">
+    <Button fx:id="changeServerButton" text="←  Change server" onAction="#changeServer" styleClass="text-button"/>
+    <GridPane hgap="48" vgap="24">
+        <columnConstraints><ColumnConstraints percentWidth="46"/><ColumnConstraints percentWidth="54"/></columnConstraints>
+        <VBox spacing="24" minWidth="0">
+            <BrandMark size="56"/>
+            <VBox spacing="12"><Label text="MAKE YOUR ENTRANCE" styleClass="eyebrow"/><Label text="Your name.&#10;Your next rivalry." styleClass="page-title" wrapText="true"/><Label text="Choose a battle name and create an account on your selected server. Then sign in to play." styleClass="body-secondary" wrapText="true"/></VBox>
+            <VBox spacing="10" styleClass="content-card"><Label text="SELECTED SERVER" styleClass="eyebrow"/><Label fx:id="selectedServer" styleClass="body-secondary" wrapText="true"/></VBox>
+            <Label fx:id="securityNote" styleClass="supporting-text" wrapText="true"/>
+        </VBox>
+        <VBox spacing="16" minWidth="0" styleClass="content-card,form-card" GridPane.columnIndex="1">
+            <Label text="Create your account" styleClass="section-title"/>
+            <VBox fx:id="formFields" spacing="12">
+                <VBox spacing="6"><Label text="Username" styleClass="field-label"/><TextField fx:id="username" promptText="3–16 letters, digits or underscores"/></VBox>
+                <VBox spacing="6"><Label text="Password" styleClass="field-label"/><PasswordInput fx:id="password"/></VBox>
+                <VBox spacing="6"><Label text="Confirm password" styleClass="field-label"/><PasswordInput fx:id="confirmation" promptText="Confirm password"/></VBox>
+            </VBox>
+            <Label fx:id="formError" styleClass="validation-message" wrapText="true"/>
+            <VBox fx:id="authProgress" spacing="8" visible="false"><ProgressIndicator maxWidth="26" maxHeight="26"/><Label fx:id="authStatus" styleClass="body-secondary" wrapText="true"/></VBox>
+            <Button fx:id="submitButton" text="Create account  →" onAction="#submit" defaultButton="true" styleClass="primary-button,hero-button" maxWidth="1.7976931348623157E308"/>
+            <Button fx:id="loginLink" text="Already registered? Sign in" onAction="#login" styleClass="text-button" maxWidth="1.7976931348623157E308"/>
+        </VBox>
+    </GridPane>
+</VBox></StackPane></content></ScrollPane>

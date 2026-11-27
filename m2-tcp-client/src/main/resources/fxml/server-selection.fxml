@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<ScrollPane xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.quizbattle.client.ui.controller.ServerSelectionController" fitToWidth="true" hbarPolicy="NEVER" styleClass="page-scroll">
+<content><StackPane alignment="TOP_CENTER" styleClass="standard-page"><VBox spacing="24" maxWidth="1160">
+    <Button fx:id="backWelcome" text="←  Back to welcome" onAction="#back" styleClass="text-button"/>
+    <VBox spacing="8"><Label text="YOUR NETWORK. YOUR COMPETITION." styleClass="eyebrow"/><Label text="Find your battle." styleClass="page-title"/><Label text="Choose a campus server or bring its address. Your connection begins after sign-in." styleClass="body-secondary" wrapText="true"/></VBox>
+    <GridPane hgap="24" vgap="24">
+        <columnConstraints><ColumnConstraints percentWidth="60"/><ColumnConstraints percentWidth="40"/></columnConstraints>
+        <VBox spacing="16" minWidth="0">
+            <HBox spacing="12" alignment="CENTER_LEFT"><Label text="Available servers" styleClass="section-title"/><Region HBox.hgrow="ALWAYS"/><ProgressIndicator fx:id="scanProgress" visible="false" maxWidth="24" maxHeight="24"/><Button fx:id="scanButton" text="↻  Scan again" onAction="#scan" styleClass="outline-button"/></HBox>
+            <Label fx:id="discoveryStatus" text="Ready to scan your local network." wrapText="true" styleClass="status-message"/>
+            <FlowPane fx:id="servers" hgap="16" vgap="16"/>
+        </VBox>
+        <VBox spacing="16" minWidth="0" styleClass="content-card,form-card" GridPane.columnIndex="1">
+            <Label text="Have an address?" styleClass="section-title"/>
+            <Label text="Manual connection works even when campus discovery is unavailable." styleClass="body-secondary" wrapText="true"/>
+            <VBox spacing="8"><Label text="Server IP or hostname" styleClass="field-label"/><TextField fx:id="manualHost" promptText="Enter the server address"/></VBox>
+            <VBox spacing="8"><Label text="Game TCP port" styleClass="field-label"/><TextField fx:id="gatewayPort"/></VBox>
+            <VBox spacing="8"><Label text="Authentication TLS port" styleClass="field-label"/><TextField fx:id="tlsPort"/></VBox>
+            <Label fx:id="manualError" styleClass="validation-message" wrapText="true"/>
+            <Button fx:id="manualSelect" text="Continue to sign in  →" onAction="#manual" styleClass="primary-button" maxWidth="1.7976931348623157E308"/>
+            <Label text="Selecting a server does not establish or authenticate a game connection." styleClass="supporting-text" wrapText="true"/>
+        </VBox>
+    </GridPane>
+</VBox></StackPane></content></ScrollPane>

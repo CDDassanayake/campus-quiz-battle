@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<ScrollPane xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.quizbattle.client.ui.controller.QuizController" fitToWidth="true" hbarPolicy="NEVER" styleClass="page-scroll">
+<content><StackPane alignment="TOP_CENTER" styleClass="game-page"><VBox spacing="20" maxWidth="1100" minWidth="0">
+    <HBox spacing="16" alignment="CENTER_LEFT"><VBox spacing="6" HBox.hgrow="ALWAYS" minWidth="0"><Label text="THE BATTLE IS ON" styleClass="eyebrow"/><Label fx:id="roomTitle" styleClass="section-title" wrapText="true"/></VBox><Button fx:id="leavePlaceholder" text="Leave room" onAction="#leave" styleClass="outline-button"/><Button fx:id="logoutPlaceholder" text="Disconnect" onAction="#logout" styleClass="text-button"/></HBox>
+    <GridPane hgap="20" vgap="20"><columnConstraints><ColumnConstraints percentWidth="70"/><ColumnConstraints percentWidth="30"/></columnConstraints>
+    <VBox spacing="18" minWidth="0">
+        <VBox spacing="16" styleClass="content-card,question-panel" minWidth="0">
+            <HBox spacing="16" alignment="CENTER_LEFT"><VBox spacing="8" HBox.hgrow="ALWAYS" minWidth="0"><Label fx:id="questionNumber" styleClass="eyebrow"/><Label fx:id="playerScore" styleClass="body-secondary" wrapText="true"/><ProgressBar fx:id="questionProgress" maxWidth="1.7976931348623157E308" styleClass="question-progress"/></VBox><StackPane fx:id="timerHost"/></HBox>
+            <Label fx:id="questionText" styleClass="question-text" wrapText="true" maxWidth="1.7976931348623157E308"/>
+            <Label text="Last reported time · server decides the deadline" styleClass="supporting-text" wrapText="true"/>
+        </VBox>
+        <GridPane fx:id="answers" hgap="14" vgap="14"><columnConstraints><ColumnConstraints percentWidth="50"/><ColumnConstraints percentWidth="50"/></columnConstraints></GridPane>
+        <VBox spacing="8" styleClass="submission-panel"><Label fx:id="answerStatus" id="answerStatus" styleClass="submission-status" wrapText="true"/><Label fx:id="selectedAnswer" styleClass="body-secondary" wrapText="true"/></VBox>
+    </VBox><VBox fx:id="rankingHost" minWidth="0" GridPane.columnIndex="1"/>
+    </GridPane>
+</VBox></StackPane></content></ScrollPane>

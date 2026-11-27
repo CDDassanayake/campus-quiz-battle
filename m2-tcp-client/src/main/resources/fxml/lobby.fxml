@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import com.quizbattle.client.ui.components.BrandMark?>
+<ScrollPane xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.quizbattle.client.ui.controller.LobbyController" fitToWidth="true" hbarPolicy="NEVER" styleClass="page-scroll">
+<content><StackPane alignment="TOP_CENTER" styleClass="standard-page"><VBox spacing="24" maxWidth="1160">
+    <VBox spacing="8"><Label text="LET THE RIVALRY BEGIN" styleClass="eyebrow"/><Label fx:id="greeting" styleClass="page-title" wrapText="true"/><Label fx:id="serverInfo" styleClass="body-secondary" wrapText="true"/></VBox>
+    <HBox spacing="24" alignment="CENTER_LEFT" styleClass="content-card,create-banner">
+        <BrandMark size="48"/><VBox spacing="8" HBox.hgrow="ALWAYS"><Label text="Your crew. Your next battle." styleClass="section-title" wrapText="true"/><Label text="Give your room a name, choose a question count and bring everyone together." styleClass="body-secondary" wrapText="true"/></VBox>
+        <Button fx:id="createBattle" text="＋  Create Battle" onAction="#create" styleClass="primary-button,hero-button"/>
+    </HBox>
+    <VBox spacing="16">
+        <HBox spacing="16" alignment="CENTER_LEFT"><Label text="Available rooms" styleClass="section-title"/><Region HBox.hgrow="ALWAYS"/><Button fx:id="refreshRooms" text="↻  Refresh" onAction="#refresh" styleClass="outline-button"/></HBox>
+        <HBox spacing="12" alignment="CENTER_LEFT"><TextField fx:id="searchRooms" promptText="Search by room name or ID" styleClass="search-field" HBox.hgrow="ALWAYS"/><ComboBox fx:id="roomFilter" prefWidth="170"/></HBox>
+        <HBox fx:id="roomProgress" spacing="10" alignment="CENTER_LEFT" visible="false"><ProgressIndicator maxWidth="22" maxHeight="22"/><Label text="Waiting for the server response…" styleClass="body-secondary"/></HBox>
+        <Label fx:id="lobbyError" styleClass="validation-message" wrapText="true"/>
+        <Label fx:id="emptyRooms" styleClass="status-message" wrapText="true"/>
+        <FlowPane fx:id="roomCards" hgap="16" vgap="16"/>
+    </VBox>
+</VBox></StackPane></content></ScrollPane>

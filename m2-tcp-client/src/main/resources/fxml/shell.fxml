@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.SVGPath?>
+<?import com.quizbattle.client.ui.components.BrandMark?>
+<?import com.quizbattle.client.ui.components.StatusIndicator?>
+<BorderPane xmlns:fx="http://javafx.com/fxml/1" fx:id="shellRoot" fx:controller="com.quizbattle.client.ui.controller.ShellController" styleClass="app-shell">
+    <top>
+        <HBox alignment="CENTER_LEFT" spacing="16" styleClass="app-header">
+            <Button onAction="#home" styleClass="brand-home" accessibleText="Quiz Battle home">
+                <graphic><HBox spacing="12" alignment="CENTER_LEFT">
+                    <BrandMark size="40"/>
+                    <VBox spacing="2"><Label text="QUIZ BATTLE" styleClass="brand-name"/><Label text="CAMPUS MULTIPLAYER" styleClass="brand-caption"/></VBox>
+                </HBox></graphic>
+            </Button>
+            <Label fx:id="pageTitle" text="CAMPUS EDITION" styleClass="header-page"/>
+            <Region HBox.hgrow="ALWAYS"/>
+            <StatusIndicator fx:id="connectionStatus"/>
+            <Label fx:id="playerLabel" styleClass="player-chip" visible="false" maxWidth="240"/>
+            <Button fx:id="disconnectButton" text="Logout" onAction="#disconnect" styleClass="outline-button" visible="false"/>
+            <HBox fx:id="headerActions" spacing="8" alignment="CENTER_LEFT">
+                <Button fx:id="headerHelp" text="How to play" onAction="#help" styleClass="text-button"/>
+                <Button fx:id="settingsButton" onAction="#settings" styleClass="icon-button" accessibleText="Open settings">
+                    <tooltip><Tooltip text="Settings"/></tooltip>
+                    <graphic><SVGPath styleClass="line-icon" content="M 12 8 A 4 4 0 1 0 12 16 A 4 4 0 1 0 12 8 M 9 2 L 15 2 L 16 6 L 20 7 L 22 12 L 19 16 L 19 20 L 14 22 L 10 19 L 6 19 L 2 14 L 5 10 L 5 6 Z"/></graphic>
+                </Button>
+            </HBox>
+        </HBox>
+    </top>
+    <center><StackPane fx:id="contentHost"/></center>
+    <bottom>
+        <HBox spacing="20" alignment="CENTER_LEFT" styleClass="app-footer">
+            <Label text="CAMPUS EDITION  /  v1.0" styleClass="footer-edition"/>
+            <Label fx:id="footerStatus" text="Disconnected." maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS" styleClass="footer-status"/>
+            <Label fx:id="modeLabel" styleClass="mode-label"/>
+        </HBox>
+    </bottom>
+</BorderPane>

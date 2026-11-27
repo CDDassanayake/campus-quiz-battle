@@ -1,0 +1,9 @@
+# Generated binaries outside Maven's already-ignored target directory.
+*.class
+*.jar
+
+# Local environment variants and additional private-key/container formats.
+# Root ignore rules already exclude .env, secrets/, *.pem, *.p12 and *.jks.
+.env.*
+*.key
+*.pfx

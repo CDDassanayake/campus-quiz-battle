@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.SVGPath?>
+<ScrollPane xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.quizbattle.client.ui.controller.PlaceholderController" fitToWidth="true" hbarPolicy="NEVER" styleClass="page-scroll">
+    <content><StackPane alignment="TOP_CENTER" styleClass="standard-page">
+        <VBox spacing="24" maxWidth="850">
+            <Button text="←  Back" onAction="#back" styleClass="text-button" maxWidth="100"/>
+            <Label fx:id="nextStep" styleClass="eyebrow"/>
+            <Label fx:id="title" styleClass="page-title" wrapText="true"/>
+            <VBox alignment="CENTER" spacing="24" styleClass="content-card,empty-state">
+                <StackPane styleClass="empty-icon"><SVGPath styleClass="line-icon" scaleX="2" scaleY="2" content="M 2 7 L 22 7 L 22 21 L 2 21 Z M 7 7 L 7 2 L 17 2 L 17 7 M 7 12 L 17 12 M 7 16 L 14 16"/></StackPane>
+                <Label text="A place for your next battle." styleClass="section-title" wrapText="true"/>
+                <Label fx:id="description" wrapText="true" maxWidth="520" styleClass="body-secondary" textAlignment="CENTER"/>
+                <Label fx:id="receivedQuestion" styleClass="placeholder-badge" wrapText="true" textAlignment="CENTER"/>
+                <Label text="Phase 6 interface pending · no answers are sent by this placeholder" styleClass="placeholder-badge" wrapText="true" textAlignment="CENTER"/>
+                <HBox spacing="12" alignment="CENTER"><Button fx:id="leavePlaceholder" text="Leave room" onAction="#leave" styleClass="primary-button"/><Button fx:id="logoutPlaceholder" text="Disconnect" onAction="#logout" styleClass="outline-button"/></HBox>
+            </VBox>
+        </VBox>
+    </StackPane></content>
+</ScrollPane>

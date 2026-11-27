@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<ScrollPane xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.quizbattle.client.ui.controller.RoundResultController" fitToWidth="true" hbarPolicy="NEVER" styleClass="page-scroll">
+<content><StackPane alignment="TOP_CENTER" styleClass="game-page"><VBox spacing="24" maxWidth="1100" minWidth="0">
+    <HBox alignment="CENTER_LEFT" spacing="16"><Label text="ROUND COMPLETE" styleClass="eyebrow" HBox.hgrow="ALWAYS" maxWidth="1.7976931348623157E308"/><Button text="Leave room" onAction="#leave" styleClass="outline-button"/><Button text="Disconnect" onAction="#logout" styleClass="text-button"/></HBox>
+    <GridPane hgap="24"><columnConstraints><ColumnConstraints percentWidth="68"/><ColumnConstraints percentWidth="32"/></columnConstraints>
+        <VBox fx:id="feedbackPanel" spacing="22" styleClass="content-card,result-panel" minWidth="0">
+            <Label fx:id="resultHeading" styleClass="page-title" wrapText="true"/><Label fx:id="resultQuestion" styleClass="body-secondary" wrapText="true"/>
+            <Label fx:id="correctAnswer" styleClass="correct-answer" wrapText="true"/><Label fx:id="yourAnswer" styleClass="body-secondary" wrapText="true"/>
+            <GridPane fx:id="resultAnswers" hgap="12" vgap="12"><columnConstraints><ColumnConstraints percentWidth="50"/><ColumnConstraints percentWidth="50"/></columnConstraints></GridPane>
+            <HBox spacing="24" alignment="CENTER_LEFT"><Label fx:id="awardedPoints" styleClass="points-display"/><Label fx:id="totalScore" styleClass="section-title" wrapText="true"/></HBox>
+            <Label text="Points and total score supplied by the server. Selection feedback compares your local choice with RESULT." styleClass="supporting-text" wrapText="true"/>
+            <Separator/><Label text="Waiting for the server's next question…" styleClass="submission-status" wrapText="true"/>
+        </VBox><VBox fx:id="rankingHost" minWidth="0" GridPane.columnIndex="1"/>
+    </GridPane>
+</VBox></StackPane></content></ScrollPane>
